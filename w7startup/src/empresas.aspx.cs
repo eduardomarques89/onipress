@@ -62,7 +62,7 @@ namespace global
                 else
                 {
                     // Adicionar novo registro
-                    string insertQuery = "INSERT INTO OniPres_planos (nome, valor, descricao, [status]) VALUES (@nome, @valor, @desc, @status)";
+                    string insertQuery = "insert into OniPres_empresa (nome_fantasia, razao_social, [cpf_cnpj], celular, email, CEP, endereco, num, bairro, complemento, estado, cidade, [status]) values (@nome, @razao, @cpf, @celular, @email, @cep, @endereco, @num, @bairro, @complemento, @estado, @cidade, @status)";
                     DbCommand insertCommand = db.GetSqlStringCommand(insertQuery);
 
                     db.AddInParameter(insertCommand, "@nome", DbType.String, txtNomeCliente.Text);

@@ -98,7 +98,7 @@
         <SortedDescendingCellStyle BackColor="#D4DFE1" />
         <SortedDescendingHeaderStyle BackColor="#15524A" />
     </asp:GridView>
-    <asp:SqlDataSource ID="sdsDados" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="select id, nome, valor, descricao from OniPres_planos where [status] = 'Ativo'">
+    <asp:SqlDataSource ID="sdsDados" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="select id, nome, FORMAT(valor, 'N2') AS valor, descricao from OniPres_planos where [status] = 'Ativo'">
     </asp:SqlDataSource>
 
 

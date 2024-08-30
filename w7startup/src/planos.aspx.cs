@@ -57,7 +57,11 @@ namespace global
                     DbCommand insertCommand = db.GetSqlStringCommand(insertQuery);
 
                     db.AddInParameter(insertCommand, "@nome", DbType.String, txtNome.Text);
-                    db.AddInParameter(insertCommand, "@valor", DbType.String, txtValor.Text);
+                    float valorFloat;
+                    if (float.TryParse(txtValor.Text, out valorFloat))
+                    {
+                        db.AddInParameter(insertCommand, "@valor", DbType.Single, valorFloat);
+                    }
                     db.AddInParameter(insertCommand, "@desc", DbType.String, txtDescricao.Text);
                     db.AddInParameter(insertCommand, "@status", DbType.String, ddlStatus.SelectedValue);
 
