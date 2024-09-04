@@ -16,6 +16,8 @@ using System.Runtime.InteropServices;
 using System.Data.Common;
 using Microsoft.Practices.EnterpriseLibrary.Data;
 using System.Web.UI.WebControls;
+using gerentefacil;
+using Newtonsoft.Json;
 
 namespace global
 {
@@ -96,7 +98,24 @@ namespace global
             }
         }
 
-
+        protected void txtCEP_TextChanged(object sender, EventArgs e)
+        {
+            if (txtCEP.Text.Length > 8)
+            {
+                string cepnovo = txtCEP.Text.Replace("-", "");
+                var info = cep.HttpPost("http://viacep.com.br/ws/" + cepnovo + "/json/");
+                dynamic dados = JsonConvert.DeserializeObject<dynamic>(info);
+                var end = dados["logradouro"];
+                txtEndereco.Text = end.ToString();
+                var bairro = dados["bairro"];
+                txtBairro.Text = bairro.ToString();
+                var cidade = dados["localidade"];
+                txtCidade.Text = cidade.ToString();
+                var uf = dados["uf"];
+                ddlUF.SelectedValue = uf.ToString();
+            }
+            ScriptManager.RegisterStartupScript(this, GetType(), "OpenModal", "$('#" + pnlModal.ClientID + "').modal('show');", true);
+        }
 
         private void LimparCampos()
         {

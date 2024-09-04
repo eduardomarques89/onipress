@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:HiddenField ID="hdfId" runat="server" />
+    <script src="js/mascara.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <!-- Title and Top Buttons Start -->
@@ -109,7 +110,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Adicionar Empresas</h5>
+                    <h5 class="modal-title">Adicionar Unidades</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -125,7 +126,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">CEP</label>
-                            <asp:TextBox ID="txtCEP" runat="server" CssClass="form-control" Required></asp:TextBox>
+                            <asp:TextBox ID="txtCEP" runat="server"  onkeyup="formataCEP(this,event);" OnTextChanged="txtCEP_TextChanged" CssClass="form-control" AutoPostBack="True" Required></asp:TextBox>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Endereço</label>

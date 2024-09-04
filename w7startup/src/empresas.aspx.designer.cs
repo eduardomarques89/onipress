@@ -87,6 +87,24 @@ namespace global
         protected global::System.Web.UI.WebControls.TextBox txtNomeCliente;
 
         /// <summary>
+        /// Controle ddlPlano.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlPlano;
+
+        /// <summary>
+        /// Controle sdsPlanos.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsPlanos;
+
+        /// <summary>
         /// Controle txtRazaoSocial.
         /// </summary>
         /// <remarks>

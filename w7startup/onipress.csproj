@@ -181,6 +181,7 @@
     <Content Include="src\admin\dashboard_admin.aspx" />
     <Content Include="src\blocos.aspx" />
     <Content Include="src\cadastro.aspx" />
+    <Content Include="src\js\mascara.js" />
     <Content Include="src\tipoocorrencia.aspx" />
     <Content Include="src\tipopessoas.aspx" />
     <Content Include="src\ocorrencias.aspx" />

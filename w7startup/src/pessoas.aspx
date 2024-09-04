@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:HiddenField ID="hdfId" runat="server" />
+    <script src="js/mascara.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <!-- Title and Top Buttons Start -->
@@ -129,11 +130,11 @@
 
                     <div class="mb-3">
                         <label class="form-label">CPF</label>
-                        <asp:TextBox ID="txtCPFCNPJ" runat="server" CssClass="form-control"></asp:TextBox>
+                        <asp:TextBox ID="txtCPFCNPJ" runat="server" MaxLength="14" onkeyup="formataCPF(this,event);" CssClass="form-control"></asp:TextBox>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Celular</label>
-                        <asp:TextBox ID="txtCelular" runat="server" CssClass="form-control"></asp:TextBox>
+                        <asp:TextBox ID="txtCelular" runat="server" MaxLength="15" onkeyup="formataTelefone(this,event);" CssClass="form-control"></asp:TextBox>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">E-mail</label>
@@ -143,7 +144,7 @@
                     <!-- Local -->
                     <div class="mb-3">
                         <label class="form-label">Empresas</label>
-                        <asp:DropDownList ID="ddlEmpresas" runat="server" CssClass="form-control shadow dropdown-menu-end" DataSourceID="sdsEmpresas" DataTextField="nome_fantasia" DataValueField="id"></asp:DropDownList>
+                        <asp:DropDownList ID="ddlEmpresas" runat="server" CssClass="form-control shadow dropdown-menu-end" DataSourceID="sdsEmpresas" AutoPostBack="true" DataTextField="nome_fantasia" DataValueField="id" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged"></asp:DropDownList>
                         <asp:SqlDataSource ID="sdsEmpresas" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" SelectCommand=
                             "select id, nome_fantasia from OniPres_empresa where [status] = 'Ativo'"></asp:SqlDataSource>
                     </div>
@@ -151,19 +152,31 @@
                         <label class="form-label">Unidades</label>
                         <asp:DropDownList ID="ddlUnidades" runat="server" CssClass="form-control shadow dropdown-menu-end" DataSourceID="sdsUnidades" DataTextField="nome" DataValueField="id"></asp:DropDownList>
                         <asp:SqlDataSource ID="sdsUnidades" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" SelectCommand=
-                            "select id, nome from OniPres_unidade where [status] = 'Ativo'"></asp:SqlDataSource>
+                            "select id, nome from OniPres_unidade where [status] = 'Ativo' and empresa = @idempresa">
+                            <SelectParameters>
+                                <asp:ControlParameter ControlID="ddlEmpresas" Name="idempresa" PropertyName="SelectedValue" />
+                            </SelectParameters>
+                        </asp:SqlDataSource>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Bloco</label>
                         <asp:DropDownList ID="ddlBloco" runat="server" CssClass="form-control shadow dropdown-menu-end" DataSourceID="sdsBloco" DataTextField="nome" DataValueField="id"></asp:DropDownList>
                         <asp:SqlDataSource ID="sdsBloco" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" SelectCommand=
-                            "select id, nome from OniPres_bloco where [status] = 'Ativo'"></asp:SqlDataSource>
+                            "select id, nome from OniPres_bloco where [status] = 'Ativo' and unidade = @idunidade">
+                            <SelectParameters>
+                                <asp:ControlParameter ControlID="ddlUnidades" Name="idunidade" PropertyName="SelectedValue" />
+                            </SelectParameters>
+                        </asp:SqlDataSource>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Dispositivo</label>
                         <asp:DropDownList ID="ddlDispositivo" runat="server" CssClass="form-control shadow dropdown-menu-end" DataSourceID="sdsDispositivo" DataTextField="nome" DataValueField="id"></asp:DropDownList>
                         <asp:SqlDataSource ID="sdsDispositivo" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" SelectCommand=
-                            "select id, nome from OniPres_dispostivo where [status] = 'Ativo'"></asp:SqlDataSource>
+                            "select id, nome from OniPres_dispostivo where [status] = 'Ativo' and bloco = @idbloco">
+                            <SelectParameters>
+                                <asp:ControlParameter ControlID="ddlBloco" Name="idbloco" PropertyName="SelectedValue" />
+                            </SelectParameters>
+                        </asp:SqlDataSource>
                     </div>
 
                     <div class="mb-3 w-100">

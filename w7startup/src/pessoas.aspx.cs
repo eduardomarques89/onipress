@@ -169,5 +169,12 @@ namespace global
         {
             gdvDados.DataBind();
         }
+
+        protected void ddlEmpresas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ddlUnidades.DataBind();
+            ddlBloco.DataBind();
+            ddlDispositivo.DataBind();
+        }
     }
 }
