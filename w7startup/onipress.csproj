@@ -180,7 +180,10 @@
   <ItemGroup>
     <Content Include="src\admin\dashboard_admin.aspx" />
     <Content Include="src\blocos.aspx" />
+    <Content Include="src\cadastrar.aspx" />
     <Content Include="src\cadastro.aspx" />
+    <Content Include="src\img\icon-send.svg" />
+    <Content Include="src\img\photo_camera.svg" />
     <Content Include="src\js\mascara.js" />
     <Content Include="src\tipoocorrencia.aspx" />
     <Content Include="src\tipopessoas.aspx" />
@@ -613,6 +616,13 @@
     </Compile>
     <Compile Include="src\blocos.aspx.designer.cs">
       <DependentUpon>blocos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="src\cadastrar.aspx.cs">
+      <DependentUpon>cadastrar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="src\cadastrar.aspx.designer.cs">
+      <DependentUpon>cadastrar.aspx</DependentUpon>
     </Compile>
     <Compile Include="src\cadastro.aspx.cs">
       <DependentUpon>cadastro.aspx</DependentUpon>
