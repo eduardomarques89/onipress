@@ -719,12 +719,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Properties\PublishProfiles\globalrastreador - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\globalrastreador - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\w7onipress - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\w7onipress - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\w7startup - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\w7startup - Web Deploy.pubxml" />
     <Content Include="src\css\vendor\bootstrap.min.css.map" />
     <Content Include="src\font\CS-Interface\fonts\CS-Interface.ttf" />
     <Content Include="src\font\CS-Interface\fonts\CS-Interface.woff" />

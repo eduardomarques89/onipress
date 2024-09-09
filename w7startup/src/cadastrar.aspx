@@ -2,7 +2,6 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <style>
-        /* Importação da Fonte Local */
         @font-face {
             font-family: 'CS-Interface';
             src: url('src/font/fonts/CS-Interface.ttf') format('truetype'); 
@@ -32,8 +31,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Sombra para o efeito de flutuação */
-            border: 1px solid #dddddd; /* Borda sutil */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid #dddddd;
         }
 
         .content-register {
@@ -45,8 +44,8 @@
         }
 
         .content-register h3 {
-            font-size: 28px;
-            margin: 0; /* Removendo a margem inferior */
+            font-size: 1.75rem;
+            margin: 0;
             font-family: 'CS-Interface', sans-serif;
         }
 
@@ -66,7 +65,7 @@
         }
 
         .content-register input::placeholder {
-            font-size: 18px;
+            font-size: 1.125rem;
             opacity: 40%;
         }
 
@@ -86,12 +85,105 @@
             border: none;
             border-radius: 15px;
             padding: 9px 14px 13px 30px;
-            font-size: 18px;
+            font-size: 1.125rem;
             font-weight: 100;
         }
 
         .cs-send {
             padding-left: 10px;
+        }
+
+        /* Media Query para telas menores que 768px */
+        @media (max-width: 768px) {
+            .box-bg {
+                width: 70%;
+                height: 600px;
+                border-radius: 10px;
+                box-shadow: none;
+                align-items: center;
+            }
+
+            .divisor-side img {
+               height: 600px;
+               width: 170px;
+               border-radius: 15px;
+            }
+
+            .content-register {
+                align-items: center;
+                padding: 10px;
+            }
+
+            .input-name, .input-cpf, .input-tell {
+                width: 100%;
+                height: 50px;
+                margin-top: 20px;
+            }
+
+            .button-advance {
+                width: 100%;
+                padding: 10px;
+                font-size: 1rem;
+                margin-top: 20px;
+            }
+        }
+
+        /* Media Query para telas menores que 480px (por exemplo, celulares menores) */
+        @media (max-width: 500px) {
+            .box-bg {
+                width: 80%;
+                height: 600px;
+                border-radius: 10px;
+                box-shadow: none;
+                align-items: center;
+            }
+
+            .input-name, .input-cpf, .input-tell {
+                height: 45px;
+                font-size: 1rem;
+            }
+
+            .content-register input::placeholder {
+                font-size: 0.875rem;
+                opacity: 40%;
+            }
+
+            .button-advance {
+                padding: 8px;
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Media Query para telas menores que 480px (por exemplo, celulares menores) */
+        @media (max-width: 500px) {
+            .box-bg {
+                width: 80%;
+                height: 600px;
+                border-radius: 10px;
+                box-shadow: none;
+                align-items: center;
+            }
+
+            .content-register h3 {
+                font-size: 1.563rem;
+                margin: 0;
+                font-family: 'CS-Interface', sans-serif;
+            }
+
+            .input-name, .input-cpf, .input-tell {
+                height: 45px;
+                font-size: 1rem;
+            }
+
+            .content-register input::placeholder {
+                font-size: 0.813rem;
+                opacity: 40%;
+            }
+
+            .button-advance {
+                padding: 8px;
+                font-size: 0.875rem;
+            }
         }
 
     </style>
