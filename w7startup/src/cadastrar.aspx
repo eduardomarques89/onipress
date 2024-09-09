@@ -93,8 +93,33 @@
             padding-left: 10px;
         }
 
-        /* Media Query para telas menores que 768px */
-        @media (max-width: 768px) {
+        @media (max-width: 1100px) {
+            .box-bg {
+                width: 80%;
+                height: auto;
+                border-radius: 10px;
+                box-shadow: none;
+                align-items: center;
+            }
+
+            .input-name, .input-cpf, .input-tell {
+                height: 45px;
+                width: 500px;
+                font-size: 1rem;
+            }
+
+            .content-register input::placeholder {
+                font-size: 0.875rem;
+                opacity: 40%;
+            }
+
+            .button-advance {
+                padding: 8px;
+                font-size: 0.875rem;
+            }
+        }
+
+        @media (max-width: 1000px) {
             .box-bg {
                 width: 70%;
                 height: 600px;
@@ -128,7 +153,6 @@
             }
         }
 
-        /* Media Query para telas menores que 480px (por exemplo, celulares menores) */
         @media (max-width: 500px) {
             .box-bg {
                 width: 80%;
@@ -154,7 +178,6 @@
             }
         }
 
-        /* Media Query para telas menores que 480px (por exemplo, celulares menores) */
         @media (max-width: 500px) {
             .box-bg {
                 width: 80%;
@@ -195,13 +218,22 @@
             </div>
             <div class="content-register">
                 <h3>Cadastre-se</h3>
-                <input class="input-name" type="text" placeholder="Nome completo" />
-                <input class="input-cpf" type="text" placeholder="CPF"/>
-                <input class="input-tell" type="text" placeholder="Telefone"/>
-                <button class="button-advance">
-                    Avançar
+                <asp:TextBox ID="txtName" runat="server" class="input-name" placeholder="Nome completo" Required></asp:TextBox>
+                <asp:Label ID="lblNome" runat="server" Text=""></asp:Label>
+                <asp:TextBox ID="txtCpf" runat="server" class="input-cpf" placeholder="CPF" Required></asp:TextBox>
+                <asp:Label ID="lblCPF" runat="server" Text=""></asp:Label>
+                <asp:TextBox ID="txtTell" runat="server" class="input-tell" placeholder="Telefone" Required></asp:TextBox>
+                <asp:Label ID="lblTell" runat="server" Text=""></asp:Label>
+                <asp:LinkButton ID="EnviarDados" class="button-advance" runat="server" OnClick="EnviarDados_Click">
+                    <span>Avançar</span>
                     <img src="img/icon-send.svg" alt="Enviar" />
-                </button>
+                </asp:LinkButton>
+
+                <br />
+                <asp:Label ID="lblReposta" runat="server" Text=""></asp:Label>
+                <asp:Label ID="lblErro" runat="server" Text=""></asp:Label>
+
+                <asp:Label ID="lblTeste" runat="server" Text=""></asp:Label>
             </div>
         </div>
     </div>
