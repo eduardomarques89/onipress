@@ -179,25 +179,25 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="src\admin\dashboard_admin.aspx" />
-    <Content Include="src\admin\blocos.aspx" />
+    <Content Include="src\blocos.aspx" />
     <Content Include="src\acesso.aspx" />
     <Content Include="src\cadastrar.aspx" />
-    <Content Include="src\admin\cadastro.aspx" />
+    <Content Include="src\cadastro.aspx" />
     <Content Include="src\img\icon-send.svg" />
     <Content Include="src\img\photo_camera.svg" />
     <Content Include="src\js\mascara.js" />
-    <Content Include="src\admin\tipoocorrencia.aspx" />
-    <Content Include="src\admin\tipopessoas.aspx" />
-    <Content Include="src\admin\ocorrencias.aspx" />
-    <Content Include="src\admin\planos.aspx" />
-    <Content Include="src\admin\dispositivos.aspx" />
-    <Content Include="src\admin\pessoas.aspx" />
-    <Content Include="src\admin\unidades.aspx" />
+    <Content Include="src\tipoocorrencia.aspx" />
+    <Content Include="src\tipopessoas.aspx" />
+    <Content Include="src\ocorrencias.aspx" />
+    <Content Include="src\planos.aspx" />
+    <Content Include="src\dispositivos.aspx" />
+    <Content Include="src\pessoas.aspx" />
+    <Content Include="src\unidades.aspx" />
     <Content Include="src\img\logo\logo-write.png" />
     <Content Include="src\img\logo\logo.png" />
-    <Content Include="src\admin\empresas.aspx" />
+    <Content Include="src\empresas.aspx" />
     <Content Include="src\login.aspx" />
-    <Content Include="src\admin\dashboard.aspx" />
+    <Content Include="src\dashboard.aspx" />
     <Content Include="src\css\main.css" />
     <Content Include="src\css\styles.css" />
     <Content Include="src\css\vendor\autoComplete.css" />
@@ -611,11 +611,11 @@
     <Compile Include="src\admin\dashboard_admin.aspx.designer.cs">
       <DependentUpon>dashboard_admin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="src\admin\blocos.aspx.cs">
+    <Compile Include="src\blocos.aspx.cs">
       <DependentUpon>blocos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="src\admin\blocos.aspx.designer.cs">
+    <Compile Include="src\blocos.aspx.designer.cs">
       <DependentUpon>blocos.aspx</DependentUpon>
     </Compile>
     <Compile Include="src\acesso.aspx.cs">
@@ -632,67 +632,67 @@
     <Compile Include="src\cadastrar.aspx.designer.cs">
       <DependentUpon>cadastrar.aspx</DependentUpon>
     </Compile>
-    <Compile Include="src\admin\cadastro.aspx.cs">
+    <Compile Include="src\cadastro.aspx.cs">
       <DependentUpon>cadastro.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="src\admin\cadastro.aspx.designer.cs">
+    <Compile Include="src\cadastro.aspx.designer.cs">
       <DependentUpon>cadastro.aspx</DependentUpon>
     </Compile>
-    <Compile Include="src\admin\tipoocorrencia.aspx.cs">
+    <Compile Include="src\tipoocorrencia.aspx.cs">
       <DependentUpon>tipoocorrencia.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="src\admin\tipoocorrencia.aspx.designer.cs">
+    <Compile Include="src\tipoocorrencia.aspx.designer.cs">
       <DependentUpon>tipoocorrencia.aspx</DependentUpon>
     </Compile>
-    <Compile Include="src\admin\tipopessoas.aspx.cs">
+    <Compile Include="src\tipopessoas.aspx.cs">
       <DependentUpon>tipopessoas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="src\admin\tipopessoas.aspx.designer.cs">
+    <Compile Include="src\tipopessoas.aspx.designer.cs">
       <DependentUpon>tipopessoas.aspx</DependentUpon>
     </Compile>
-    <Compile Include="src\admin\ocorrencias.aspx.cs">
+    <Compile Include="src\ocorrencias.aspx.cs">
       <DependentUpon>ocorrencias.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="src\admin\ocorrencias.aspx.designer.cs">
+    <Compile Include="src\ocorrencias.aspx.designer.cs">
       <DependentUpon>ocorrencias.aspx</DependentUpon>
     </Compile>
-    <Compile Include="src\admin\planos.aspx.cs">
+    <Compile Include="src\planos.aspx.cs">
       <DependentUpon>planos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="src\admin\planos.aspx.designer.cs">
+    <Compile Include="src\planos.aspx.designer.cs">
       <DependentUpon>planos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="src\admin\dispositivos.aspx.cs">
+    <Compile Include="src\dispositivos.aspx.cs">
       <DependentUpon>dispositivos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="src\admin\dispositivos.aspx.designer.cs">
+    <Compile Include="src\dispositivos.aspx.designer.cs">
       <DependentUpon>dispositivos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="src\admin\pessoas.aspx.cs">
+    <Compile Include="src\pessoas.aspx.cs">
       <DependentUpon>pessoas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="src\admin\pessoas.aspx.designer.cs">
+    <Compile Include="src\pessoas.aspx.designer.cs">
       <DependentUpon>pessoas.aspx</DependentUpon>
     </Compile>
-    <Compile Include="src\admin\unidades.aspx.cs">
+    <Compile Include="src\unidades.aspx.cs">
       <DependentUpon>unidades.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="src\admin\unidades.aspx.designer.cs">
+    <Compile Include="src\unidades.aspx.designer.cs">
       <DependentUpon>unidades.aspx</DependentUpon>
     </Compile>
-    <Compile Include="src\admin\empresas.aspx.cs">
+    <Compile Include="src\empresas.aspx.cs">
       <DependentUpon>empresas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="src\admin\empresas.aspx.designer.cs">
+    <Compile Include="src\empresas.aspx.designer.cs">
       <DependentUpon>empresas.aspx</DependentUpon>
     </Compile>
     <Compile Include="src\login.aspx.cs">
@@ -709,11 +709,11 @@
     <Compile Include="src\geral.Master.designer.cs">
       <DependentUpon>geral.Master</DependentUpon>
     </Compile>
-    <Compile Include="src\admin\dashboard.aspx.cs">
+    <Compile Include="src\dashboard.aspx.cs">
       <DependentUpon>dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="src\admin\dashboard.aspx.designer.cs">
+    <Compile Include="src\dashboard.aspx.designer.cs">
       <DependentUpon>dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="src\principal.Master.cs">
