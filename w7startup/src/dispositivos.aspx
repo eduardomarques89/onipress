@@ -87,6 +87,8 @@
             <asp:BoundField DataField="empresa" HeaderText="Empresa" SortExpression="empresa" />                      
             <asp:BoundField DataField="unidade" HeaderText="Unidade" SortExpression="unidade" />
             <asp:BoundField DataField="bloco" HeaderText="Bloco" SortExpression="bloco" />
+            <asp:BoundField DataField="numero_ip" HeaderText="IP" SortExpression="numero_ip" />
+            <asp:BoundField DataField="identificador" HeaderText="Identificador" SortExpression="identificador" />
         </Columns>
         <EditRowStyle BackColor="#7C6F57" />
         <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
@@ -99,7 +101,7 @@
         <SortedDescendingCellStyle BackColor="#D4DFE1" />
         <SortedDescendingHeaderStyle BackColor="#15524A" />
     </asp:GridView>
-    <asp:SqlDataSource ID="sdsDados" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="select d.id, d.nome, e.nome_fantasia as empresa, u.nome as unidade, b.nome as bloco from OniPres_dispostivo d join OniPres_empresa e on e.id = d.empresa join OniPres_unidade u on u.id = d.unidade join OniPres_bloco b on b.id = d.bloco where d.[status] = 'Ativo'">
+    <asp:SqlDataSource ID="sdsDados" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="select d.id, d.nome, d.numero_ip, d.identificador, e.nome_fantasia as empresa, u.nome as unidade, b.nome as bloco from OniPres_dispostivo d join OniPres_empresa e on e.id = d.empresa join OniPres_unidade u on u.id = d.unidade join OniPres_bloco b on b.id = d.bloco where d.[status] = 'Ativo'">
     </asp:SqlDataSource>
 
 
@@ -116,6 +118,10 @@
                         <label class="form-label">Identificação</label>
                         <asp:TextBox ID="txtNome" runat="server" CssClass="form-control"></asp:TextBox>
                     </div>
+                    <div class="mb-3">
+    <label class="form-label">Número de IP</label>
+    <asp:TextBox ID="txtNumeroIP" runat="server" CssClass="form-control"></asp:TextBox>
+</div>
                     <div class="mb-3">
                         <label class="form-label">Empresas</label>
                         <asp:DropDownList ID="ddlEmpresas" runat="server" CssClass="form-control shadow dropdown-menu-end" DataSourceID="sdsEmpresas" DataTextField="nome_fantasia" DataValueField="id"></asp:DropDownList>

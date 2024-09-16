@@ -79,8 +79,8 @@ namespace global
             {
                 try
                 {
-                    string host = "https://";
-                    string session = "";
+                    string host = "http://138.94.44.203:8113/";
+                    string session = "ki/uyRvGq7/e1rRGwcwo5gaY";
                     string apiUrl = $"{host}/create_objects.fcgi?session={session}";
 
                     var requestBody = new

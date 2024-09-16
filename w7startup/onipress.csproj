@@ -594,6 +594,7 @@
   <ItemGroup>
     <Compile Include="auth.cs" />
     <Compile Include="cep.cs" />
+    <Compile Include="controlId.cs" />
     <Compile Include="Criptografia.cs" />
     <Compile Include="Email.cs" />
     <Compile Include="ModelRequest\BoletoGetPaginacao.cs" />

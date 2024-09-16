@@ -15,6 +15,15 @@ namespace global
     {
 
         /// <summary>
+        /// Controle lblPlaceHolderDataInitial.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPlaceHolderDataInitial;
+
+        /// <summary>
         /// Controle txtDataInicial.
         /// </summary>
         /// <remarks>
@@ -24,13 +33,13 @@ namespace global
         protected global::System.Web.UI.WebControls.TextBox txtDataInicial;
 
         /// <summary>
-        /// Controle lblDataInitial.
+        /// Controle lblPlaceholderHourInitial.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDataInitial;
+        protected global::System.Web.UI.WebControls.Label lblPlaceholderHourInitial;
 
         /// <summary>
         /// Controle txtHourInicial.
@@ -42,13 +51,13 @@ namespace global
         protected global::System.Web.UI.WebControls.TextBox txtHourInicial;
 
         /// <summary>
-        /// Controle lblHourInitial.
+        /// Controle lblPlaceHolderDataFinal.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblHourInitial;
+        protected global::System.Web.UI.WebControls.Label lblPlaceHolderDataFinal;
 
         /// <summary>
         /// Controle txtDataFinal.
@@ -60,13 +69,13 @@ namespace global
         protected global::System.Web.UI.WebControls.TextBox txtDataFinal;
 
         /// <summary>
-        /// Controle lblDateFinal.
+        /// Controle lblPlaceHolderHourFinal.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDateFinal;
+        protected global::System.Web.UI.WebControls.Label lblPlaceHolderHourFinal;
 
         /// <summary>
         /// Controle txtHourFinal.
@@ -76,15 +85,6 @@ namespace global
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtHourFinal;
-
-        /// <summary>
-        /// Controle lblHourFinal.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblHourFinal;
 
         /// <summary>
         /// Controle txtCompanies.
@@ -166,14 +166,5 @@ namespace global
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblErro;
-
-        /// <summary>
-        /// Controle lblTeste.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTeste;
     }
 }

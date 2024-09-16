@@ -9,30 +9,34 @@
             font-style: normal;
         }
 
+        * {
+            font-family: CS-Interface;
+        }
+
         body {
             background-color: #002333;
-            height: 100%;
-            width: 100%;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
             font-family: 'CS-Interface', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .container {
-            position: absolute;
-            top: 50%;
-            left: 57%;
-            transform: translate(-50%, -50%);
-        }
-
-        .box-bg {
+        .container-box {
             background: #F6F6F6;
-            width: 1000px;
-            height: 644px;
+            width: 100%;
+            max-width: 1000px;
+            height: auto;
             border-radius: 14px;
             display: flex;
-            align-items: center;
+            flex-direction: row;
             justify-content: space-between;
+            align-items: center;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            border: 1px solid #dddddd;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .content-register {
@@ -40,56 +44,50 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            padding: 20px;
         }
 
-        .content-time {
-            margin-top: 37px;
+        .content-time,
+        .content-location {
+            margin-top: 20px;
         }
 
-        .content-locantion {
-            margin-top: 30px;
-            flex-direction: column;
-            display: flex;
-            flex-direction: column; 
-            gap: 10px;
-            max-width: 300px;
-        }
-
-        .time {
-            font-size: 1.75rem;            
-            margin-left: 37px;
-            margin-right: auto;
-            font-family: 'CS-Interface', sans-serif;
-        }
-
+        .time,
         .localization {
             font-size: 1.75rem;
-            margin-left: 36px;
-            font-family: 'CS-Interface', sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .horizontal-container,
+        .vertical-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .horizontal-container {
-            display: flex;  
-            align-items: center; 
-            gap: 20px; 
             margin-left: 54px;
         }
 
-        .input-dateinitial,
-        .input-hourinitial,
-        .input-datefinal,
-        .input-hourfinal{
+        .input-text {
             width: 197px;
             height: 60px;
-            margin-top: 23px;
+            max-width: 300px;
+            height: 60px;
+            margin-top: 5px;
             border-radius: 15px;
             border: 2px solid rgba(0, 0, 0, 0.2);
             padding: 0 20px;
             box-sizing: border-box;
             transition: border-color 0.3s;
-            margin-left: 15px
         }
 
+        .input-text:hover, 
+        .input-text:focus {
+            border-color: #0176AB;  
+            outline: none;
+        }
+        
         .input-companies, .input-block, .input-unity {
             width: 300px;
             height: 60px;
@@ -101,29 +99,11 @@
             transition: border-color 0.3s;
         }
 
-        .separator {
-            width: 5px;
-            height: 40px;
-            margin-top: 30px;
-            opacity: 30%;
-        }
-
-        .input-dateinitial:hover, .input-hourinitial:hover, .input-companies:hover {
-            border-color: #0176AB;  
-        }
-
-        .input-dateinitial:focus, .input-hourinitial:focus, .input-companies:focus {
-            border-color: #0176AB; 
-            outline: none;
-        }
-
-        .content-register input::placeholder {
+        .label-input {
             font-size: 1.125rem;
-            opacity: 40%;
-        }
-
-        .localization {
-            margin: auto;
+            opacity: 70%;
+            margin-bottom: 5px;
+            display: block;
         }
 
         .button-advance {
@@ -143,38 +123,48 @@
             padding-left: 10px;
         }
 
+        .error-message,
+        .response-message {
+            color: red;
+            margin-top: 10px;
+        }
     </style>
 
-    <div class="container">
-        <div class="box-bg">
-            <div class="divisor-side">
-                <img src="img/photo_camera.svg" />
-            </div>
-            <div class="content-register">
-                <div class="content-time">
-                    <h3 class="time">Tempo de Acesso</h3>
-                    <div class="horizontal-container">
-                        <asp:TextBox ID="txtDataInicial" runat="server" class="input-dateinitial" placeholder="Data Inicial" Required></asp:TextBox>
-                        <asp:Label ID="lblDataInitial" runat="server" Text=""></asp:Label>
-    
-                        <h1 class="separator">-</h1>
-
-                        <asp:TextBox ID="txtHourInicial" runat="server" class="input-hourinitial" placeholder="Hora Inicial" Required></asp:TextBox>
-                        <asp:Label ID="lblHourInitial" runat="server" Text=""></asp:Label>
+    <div class="container-box">
+        <div class="divisor-side">
+            <img src="img/photo_camera.svg" alt="Camera" />
+        </div>
+        <div class="content-register">
+            <div class="content-time">
+                <h3 class="time">Tempo de Acesso</h3>
+                <div class="horizontal-container">
+                    <div>
+                        <asp:Label ID="lblPlaceHolderDataInitial" CssClass="label-input" runat="server" Text="Data Inicial"></asp:Label>
+                        <asp:TextBox ID="txtDataInicial" runat="server" TextMode="Date" CssClass="input-text" aria-describedby="lblPlaceHolderDataInitial" Required></asp:TextBox>
                     </div>
-                    <div class="horizontal-container">
-                        <asp:TextBox ID="txtDataFinal" runat="server" class="input-datefinal" placeholder="Data Final" Required></asp:TextBox>
-                        <asp:Label ID="lblDateFinal" runat="server" Text=""></asp:Label>
-    
-                        <h1 class="separator">-</h1>
 
-                        <asp:TextBox ID="txtHourFinal" runat="server" class="input-hourfinal" placeholder="Hora Final" Required></asp:TextBox>
-                        <asp:Label ID="lblHourFinal" runat="server" Text=""></asp:Label>
+                    <div>
+                        <asp:Label ID="lblPlaceholderHourInitial" CssClass="label-input" runat="server" Text="Hora Inicial"></asp:Label>
+                        <asp:TextBox ID="txtHourInicial" runat="server" TextMode="Time" CssClass="input-text" aria-describedby="lblPlaceholderHourInitial" Required></asp:TextBox>
                     </div>
                 </div>
-                <div class="content-locantion">
-                    <h3 class="localization">Locais de Acesso</h3>
+                <div class="horizontal-container">
+                    <div>
+                        <asp:Label ID="lblPlaceHolderDataFinal" CssClass="label-input" runat="server" Text="Data Final"></asp:Label>
+                        <asp:TextBox ID="txtDataFinal" runat="server" TextMode="Date" CssClass="input-text" aria-describedby="lblPlaceHolderDataFinal" Required></asp:TextBox>
+                    </div>
 
+                    <div>
+                        <asp:Label ID="lblPlaceHolderHourFinal" CssClass="label-input" runat="server" Text="Hora Final"></asp:Label>
+                        <asp:TextBox ID="txtHourFinal" runat="server" TextMode="Time" CssClass="input-text" aria-describedby="lblPlaceHolderHourFinal" Required></asp:TextBox>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-location">
+                <h3 class="localization">Locais de Acesso</h3>
+
+                <div class="vertical-container">
                     <asp:TextBox ID="txtCompanies" runat="server" class="input-companies" placeholder="Empresa/Condomínio" Required></asp:TextBox>
                     <asp:Label ID="lblCompanies" runat="server" Text=""></asp:Label>
 
@@ -184,17 +174,15 @@
                     <asp:TextBox ID="txtUnity" runat="server" class="input-unity" placeholder="Unidade" Required></asp:TextBox>
                     <asp:Label ID="lblUnity" runat="server" Text=""></asp:Label>
                 </div>
-                <asp:LinkButton ID="EnviarDados" class="button-advance" runat="server" OnClick="EnviarDados_Click">
-                    <span>Avançar</span>
-                    <img src="img/icon-send.svg" alt="Enviar" />
-                </asp:LinkButton>
-
-                <br />
-                <asp:Label ID="lblReposta" runat="server" Text=""></asp:Label>
-                <asp:Label ID="lblErro" runat="server" Text=""></asp:Label>
-
-                <asp:Label ID="lblTeste" runat="server" Text=""></asp:Label>
             </div>
+
+            <asp:LinkButton ID="EnviarDados" CssClass="button-advance" runat="server" OnClick="EnviarDados_Click">
+                <span>Avançar</span>
+                <img src="img/icon-send.svg" alt="Enviar" />
+            </asp:LinkButton>
+
+            <asp:Label ID="lblReposta" runat="server" CssClass="response-message"></asp:Label>
+            <asp:Label ID="lblErro" runat="server" CssClass="error-message"></asp:Label>
         </div>
     </div>
 </asp:Content>
