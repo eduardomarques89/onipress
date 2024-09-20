@@ -10,7 +10,7 @@
         }
 
         * {
-            font-family: CS-Interface;
+            font-family: 'CS-Interface', sans-serif;
         }
 
         body {
@@ -28,15 +28,19 @@
             background: #F6F6F6;
             width: 100%;
             max-width: 1000px;
-            height: auto;
+            height: 674px;
             border-radius: 14px;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            padding: 20px;
             box-sizing: border-box;
+            margin-right: 250px;
+        }
+
+        .divisor-side {
+            height: 674px;
         }
 
         .content-register {

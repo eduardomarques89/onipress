@@ -178,6 +178,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="src\identidade.aspx" />
     <Content Include="src\admin\dashboard_admin.aspx" />
     <Content Include="src\blocos.aspx" />
     <Content Include="src\acesso.aspx" />
@@ -605,6 +606,13 @@
     <Compile Include="Model\FGeral\AccessToken.cs" />
     <Compile Include="Model\FPIX\Whatsapp.cs" />
     <Compile Include="Service\Zapweb.cs" />
+    <Compile Include="src\identidade.aspx.cs">
+      <DependentUpon>identidade.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="src\identidade.aspx.designer.cs">
+      <DependentUpon>identidade.aspx</DependentUpon>
+    </Compile>
     <Compile Include="src\admin\dashboard_admin.aspx.cs">
       <DependentUpon>dashboard_admin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

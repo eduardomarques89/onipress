@@ -10,8 +10,11 @@ namespace w7startup
 {
     internal class controlId
     {
+
+
         public static string IniciaSession()
         {
+            string url = "aqui";
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
             //byte[] data = Encoding.ASCII.GetBytes();
@@ -35,6 +38,7 @@ namespace w7startup
 
         public static string CriaDispositivo(string name, string ip)
         {
+            string url = "aqui";
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 
             //byte[] data = Encoding.ASCII.GetBytes();

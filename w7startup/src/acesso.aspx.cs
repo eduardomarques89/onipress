@@ -20,30 +20,36 @@ namespace global
 
         }
 
-        protected async void EnviarDados_Click(object sender, EventArgs e)
+        protected void EnviarDados_Click(object sender, EventArgs e)
+      //protected async void EnviarDados_Click(object sender, EventArgs e)
         {
-            lblNome.Text = "";
-            lblCPF.Text = "";
-            lblTell.Text = "";
+            txtDataInicial.Text = "";
+            txtHourInicial.Text = "";
+            txtDataFinal.Text = "";
+            txtHourFinal.Text = "";
             lblReposta.Text = "";
+
 
             bool allFieldsValid = true;
 
-            if (string.IsNullOrEmpty(txtName.Text))
+            if (string.IsNullOrEmpty(txtCompanies.Text))
             {
-                lblNome.Text = "Preencha com seu Nome!";
+                lblCompanies.Text = "Preencha o local da visita";
                 allFieldsValid = false;
             }
-            if (string.IsNullOrEmpty(txtCpf.Text))
+            if (string.IsNullOrEmpty(txtBlock.Text))
             {
-                lblCPF.Text = "Preencha com seu CPF!";
+                lblBlock.Text = "Preencha com o Bloco!";
                 allFieldsValid = false;
             }
-            if (string.IsNullOrEmpty(txtTell.Text))
+            if (string.IsNullOrEmpty(txtUnity.Text))
             {
-                lblTell.Text = "Preencha com seu Telefone!";
+                lblUnity.Text = "Preencha com a Unidade!";
                 allFieldsValid = false;
             }
+
+            string data_initial = txtDataInicial.Text + txtHourInicial.Text;
+            string data_final = txtDataFinal.Text + txtHourFinal.Text;
 
             if (allFieldsValid)
             {
@@ -52,15 +58,18 @@ namespace global
                     Database db = DatabaseFactory.CreateDatabase("ConnectionString");
 
                     DbCommand insertCommand = db.GetSqlStringCommand(
-                        "INSERT INTO OniPres_pessoa (nome, cpf, celular) VALUES (@name, @cpf, @tell)");
+                        "INSERT INTO OniPres_Acesso (data_initial, data_final, id_companies, id_block, id_unity, id_device) VALUES (@data_i, @data_f, @companies, @block, @unity, @device)");
 
-                    db.AddInParameter(insertCommand, "@name", DbType.String, txtName.Text);
-                    db.AddInParameter(insertCommand, "@cpf", DbType.String, txtCpf.Text);
-                    db.AddInParameter(insertCommand, "@tell", DbType.String, txtTell.Text);
+                    db.AddInParameter(insertCommand, "@data_i", DbType.String, data_initial);
+                    db.AddInParameter(insertCommand, "@data_f", DbType.String, data_final);
+                    db.AddInParameter(insertCommand, "@companies", DbType.String, txtCompanies.Text);
+                    db.AddInParameter(insertCommand, "@block", DbType.String, txtBlock.Text);
+                    db.AddInParameter(insertCommand, "@unity", DbType.String, txtUnity.Text);
+                    db.AddInParameter(insertCommand, "@device", DbType.String, 0);
 
                     db.ExecuteNonQuery(insertCommand);
 
-                    await EnviarParaAPI(txtName.Text);
+                    //await EnviarParaAPI(txtName.Text);
 
                     lblReposta.Text = "Dados enviados com sucesso!";
                 }
@@ -73,55 +82,20 @@ namespace global
             }
         }
 
-        private async Task EnviarParaAPI(string name)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                try
-                {
-                    string host = "https://";
-                    string session = "";
-                    string apiUrl = $"{host}/create_objects.fcgi?session={session}";
+        //private async Task EnviarParaAPI(string name)
+        //{
 
-                    var requestBody = new
-                    {
-                        @object = "users",
-                        values = new[]
-                        {
-                            new
-                            {
-                                name = name,
-                                registration = "",
-                                password = "",
-                                salt = ""
-                            }
-                        }
-                    };
-
-                    var content = new StringContent(
-                        Newtonsoft.Json.JsonConvert.SerializeObject(requestBody),
-                        Encoding.UTF8,
-                        "application/json");
-
-                    HttpResponseMessage response = await client.PostAsync(apiUrl, content);
-
-                    response.EnsureSuccessStatusCode();
-
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(responseBody);
-                }
-                catch (Exception ex)
-                {
-                    lblErro.Text = "Erro ao enviar dados para a API: " + ex;
-                }
-            }
-        }
+        //}
 
         protected void LimparCampos()
         {
-            txtName.Text = "";
-            txtCpf.Text = "";
-            txtTell.Text = "";
+            txtDataInicial.Text = "";
+            txtHourInicial.Text = "";
+            txtDataFinal.Text = "";
+            txtHourFinal.Text = "";
+            txtCompanies.Text = "";
+            txtBlock.Text = "";
+            txtUnity.Text = "";
         }
     }
 }
