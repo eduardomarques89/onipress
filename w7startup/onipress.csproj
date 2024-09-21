@@ -185,7 +185,9 @@
     <Content Include="src\cadastrar.aspx" />
     <Content Include="src\cadastro.aspx" />
     <Content Include="src\img\icon-send.svg" />
+    <Content Include="src\img\photos.svg" />
     <Content Include="src\img\photo_camera.svg" />
+    <Content Include="src\img\qrcode.svg" />
     <Content Include="src\js\mascara.js" />
     <Content Include="src\tipoocorrencia.aspx" />
     <Content Include="src\tipopessoas.aspx" />

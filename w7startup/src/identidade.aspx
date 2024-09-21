@@ -27,8 +27,8 @@
         .container-box {
             background: #F6F6F6;
             width: 1000px;
-            max-width: 1000px;
-            height: 674px;
+            max-width: 800px;
+            height: 500px;
             border-radius: 14px;
             display: flex;
             flex-direction: row;
@@ -44,21 +44,59 @@
             /*margin-bottom: 85%;*/
         }
 
-        .txt-photo {
-            font-size: 1.125rem;
-            width: 250px;
-            text-align: center;
+        .options {
+            display: flex;
+            justify-content: space-between;
+            gap: 50px;
         }
 
-        .divisor {
-            transform: rotate(90deg);
-            width: 450px
+        .option {
+            width: 45%;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-weight: 500;
         }
 
-        .txt-qrcode {
-            font-size: 1.125rem;
-            width: 250px;
+        .photo-box {
+            background-color: #e0e0e0;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+        }
+
+        .img {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+        }
+
+        button {
+            background-color: #0176AB;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'CS-Interface', sans-serif;
+        }
+
+        button:hover {
+            background-color: #005f7f;
+        }
+
+        p {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 10px;
             text-align: center;
+            width: 200px;
         }
     </style>
 
@@ -66,14 +104,18 @@
         <div class="content-register">
             <div class="content-time">
                 <h1 class="title-txt">Escolha a melhor opção para sua identificação</h1>
-                <div class="identi-photo">
-                    <p class="txt-photo">Tire uma foto e registre-se através de seu rosto</p>
-                </div>
-                <div class="divisor">
-                    <hr />
-                </div>
-                <div class="identi-qrcode">
-                    <p class="txt-qrcode">Gere um QrCode e utilize ele no aparelho de leitura</p>
+                <div class="options">
+                    <div class="option">
+                        <p>Tire uma foto e registre-se através de seu rosto</p>
+                        <div class="photo-box">
+                            <img class="img" src="img/photos.svg" alt="Placeholder da Foto">
+                        </div>
+                        <button class="button">Registrar Foto</button>
+                    </div>
+                    <div class="option">
+                        <p>Gere um QrCode e utilize ele no aparelho de leitura</p>
+                        <button class="button" style="margin-top: 50px">Gerar QrCode</button>
+                    </div>
                 </div>
             </div>
         </div>
