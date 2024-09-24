@@ -26,11 +26,11 @@
       width: 1026px;
       height: 656px;
       border-radius: 15px;
-      margin-top: 30px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      margin-left: -150px;
     }
 
     .title h2 {
