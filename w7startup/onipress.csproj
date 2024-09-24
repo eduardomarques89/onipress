@@ -82,6 +82,11 @@
     <Reference Include="pix-payload-generator.net, Version=1.0.21.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\pix-payload-generator.net.1.0.21\lib\netstandard2.0\pix-payload-generator.net.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder, Version=1.6.0.0, Culture=neutral, PublicKeyToken=c4ed5b9ae8358a28, processorArchitecture=MSIL">
+      <HintPath>packages\QRCoder.1.6.0\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp, Version=111.3.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>packages\RestSharp.111.3.0\lib\net48\RestSharp.dll</HintPath>
     </Reference>
@@ -176,18 +181,29 @@
     <Reference Include="URL Shortener, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\URL_Shortener.1.5.0\lib\net40\URL Shortener.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="src\code_morador.aspx" />
+    <Content Include="src\code.aspx" />
+    <Content Include="src\homePage.aspx" />
     <Content Include="src\identidade.aspx" />
     <Content Include="src\admin\dashboard_admin.aspx" />
     <Content Include="src\blocos.aspx" />
     <Content Include="src\acesso.aspx" />
     <Content Include="src\cadastrar.aspx" />
     <Content Include="src\cadastro.aspx" />
+    <Content Include="src\img\icon-car.svg" />
+    <Content Include="src\img\icon-faq.svg" />
+    <Content Include="src\img\icon-home.svg" />
+    <Content Include="src\img\icon-person.svg" />
     <Content Include="src\img\icon-send.svg" />
+    <Content Include="src\img\icon-work.svg" />
     <Content Include="src\img\photos.svg" />
     <Content Include="src\img\photo_camera.svg" />
+    <Content Include="src\img\qrcode.png" />
     <Content Include="src\img\qrcode.svg" />
+    <Content Include="src\img\qrcode_morador.png" />
     <Content Include="src\js\mascara.js" />
     <Content Include="src\tipoocorrencia.aspx" />
     <Content Include="src\tipopessoas.aspx" />
@@ -608,6 +624,27 @@
     <Compile Include="Model\FGeral\AccessToken.cs" />
     <Compile Include="Model\FPIX\Whatsapp.cs" />
     <Compile Include="Service\Zapweb.cs" />
+    <Compile Include="src\code_morador.aspx.cs">
+      <DependentUpon>code_morador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="src\code_morador.aspx.designer.cs">
+      <DependentUpon>code_morador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="src\code.aspx.cs">
+      <DependentUpon>code.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="src\code.aspx.designer.cs">
+      <DependentUpon>code.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="src\homePage.aspx.cs">
+      <DependentUpon>homePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="src\homePage.aspx.designer.cs">
+      <DependentUpon>homePage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="src\identidade.aspx.cs">
       <DependentUpon>identidade.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
