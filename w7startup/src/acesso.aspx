@@ -126,12 +126,6 @@
         .cs-send {
             padding-left: 10px;
         }
-
-        .error-message,
-        .response-message {
-            color: red;
-            margin-top: 10px;
-        }
     </style>
 
     <div class="container-box">

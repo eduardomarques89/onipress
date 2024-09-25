@@ -18,7 +18,6 @@
             margin: 0;
             padding: 0;
             height: 100vh;
-            font-family: 'CS-Interface', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -41,7 +40,6 @@
 
         .title-txt {
             font-size: 1.75rem;
-            /*margin-bottom: 85%;*/
         }
 
         .options {
@@ -77,14 +75,37 @@
             border-radius: 10px;
         }
 
-        button {
+        .button {
             background-color: #0176AB;
             color: white;
             padding: 10px 20px;
             border: none;
-            border-radius: 10px;
+            border-radius: 5px;
             cursor: pointer;
-            font-family: 'CS-Interface', sans-serif;
+            display: inline-block;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        .button-send {
+            border: 2px solid #0176AB; 
+            color: black;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        #fileUpload {
+            display: none;
+        }
+
+        #file-name {
+            font-size: 14px;
+            font-weight: 100;
+            color: #000;
         }
 
         button:hover {
@@ -106,18 +127,38 @@
                 <h1 class="title-txt">Escolha a melhor opção para sua identificação</h1>
                 <div class="options">
                     <div class="option">
-                        <p>Tire uma foto e registre-se através de seu rosto</p>
-                        <div class="photo-box">
-                            <img class="img" src="img/photos.svg" alt="Placeholder da Foto">
+                        <p>Envie uma foto e registre-se através de seu rosto</p>
+                        <div class="custom-file-upload" style="margin-bottom: 10px;">
+                            <label for="fileUpload1" class="button-send" style="margin-left: 20px; margin-top: 50px;">
+                                Escolher arquivo
+                            </label>
+                            <asp:FileUpload ID="fileUpload1" runat="server" style="display: none;" />
                         </div>
-                        <button class="button">Registrar Foto</button>
+                        <span id="file-name">Nenhum arquivo escolhido</span>
+                        <asp:LinkButton ID="EnviarFotos" CssClass="button" style="margin-top: 10px; margin-left: 20px" runat="server" OnClick="EnviarFotos_Click">
+                            <span>Enviar Foto</span>
+                        </asp:LinkButton>
                     </div>
                     <div class="option">
-                        <p>Gere um QrCode e utilize ele no aparelho de leitura</p>
-                        <button class="button" style="margin-top: 50px">Gerar QrCode</button>
+                        <p>Apresente este QrCode para o acesso</p>
+                        <asp:Image ID="imgQrCode" runat="server" Style="margin-top: 50px;" />
                     </div>
                 </div>
+                <asp:Label ID="lblReposta" runat="server" CssClass="response-message"></asp:Label>
+                <asp:Label ID="lblErro" runat="server" CssClass="error-message"></asp:Label>
             </div>
         </div>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        document.querySelector('.button-send').addEventListener('click', function () {
+            document.getElementById('<%= fileUpload1.ClientID %>').click();
+        });
+
+        document.getElementById('<%= fileUpload1.ClientID %>').addEventListener('change', function () {
+            var fileName = this.files[0] ? this.files[0].name : 'Nenhum arquivo escolhido';
+            document.getElementById('file-name').textContent = fileName;
+        });
+    </script>
 </asp:Content>

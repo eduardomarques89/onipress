@@ -20,8 +20,10 @@ namespace global
 
         }
 
-        protected async void EnviarDados_Click(object sender, EventArgs e)
+        //protected async void EnviarDados_Click(object sender, EventArgs e
+        protected void EnviarDados_Click(object sender, EventArgs e)
         {
+            // Limpar as labels de erro
             lblNome.Text = "";
             lblCPF.Text = "";
             lblTell.Text = "";
@@ -52,28 +54,43 @@ namespace global
                     Database db = DatabaseFactory.CreateDatabase("ConnectionString");
 
                     DbCommand insertCommand = db.GetSqlStringCommand(
-                        "INSERT INTO OniPres_pessoa (nome, cpf, celular) VALUES (@name, @cpf, @tell)");
+                        "INSERT INTO OniPres_pessoa (nome, cpf, celular, datacriacao) " +
+                        "OUTPUT INSERTED.id VALUES (@name, @cpf, @tell, GETDATE())");
 
+                    // Adiciona os parâmetros
                     db.AddInParameter(insertCommand, "@name", DbType.String, txtName.Text);
                     db.AddInParameter(insertCommand, "@cpf", DbType.String, txtCpf.Text);
                     db.AddInParameter(insertCommand, "@tell", DbType.String, txtTell.Text);
 
-                    db.ExecuteNonQuery(insertCommand);
+                    object insertedId = db.ExecuteScalar(insertCommand);
 
-                    await EnviarParaAPI(txtName.Text);
+                    if (insertedId != null)
+                    {
+                        DbCommand acessoCommand = db.GetSqlStringCommand(
+                            "INSERT INTO OniPres_Acesso (name, id_uduario) VALUES (@name, @id)");
 
-                    lblReposta.Text = "Dados enviados com sucesso!";
+                        db.AddInParameter(acessoCommand, "@id", DbType.Int32, Convert.ToInt32(insertedId));
+                        db.AddInParameter(acessoCommand, "@name", DbType.String, txtName.Text);
+
+                        db.ExecuteNonQuery(acessoCommand);
+
+                        Response.Redirect("acesso.aspx", true);
+                    }
+                    else
+                    {
+                        lblErro.Text = "Erro ao obter o ID inserido.";
+                    }
                 }
                 catch (Exception ex)
                 {
-                    lblErro.Text = "Erro ao cadastrar dados no Banco Interno! Erro: " + ex;
+                    lblErro.Text = "Erro ao cadastrar dados no Banco Interno! Erro: " + ex.Message;
                 }
 
                 LimparCampos();
             }
         }
 
-        private async Task EnviarParaAPI(string name)
+    private async Task EnviarParaAPI(string name)
         {
             using (HttpClient client = new HttpClient())
             {
