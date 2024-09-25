@@ -119,6 +119,51 @@
             text-align: center;
             width: 200px;
         }
+
+        @media (max-width: 700px) {
+    body {
+        height: auto;
+        padding: 20px;
+        justify-content: flex-start;
+    }
+
+    .container-box {
+        flex-direction: column;
+        width: 350px;
+        height: auto;
+        margin-right: 0;
+        margin-left: -200px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .options {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .option {
+        width: 100%;
+    }
+
+    .title-txt {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .button-send, .button {
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    #file-name {
+        text-align: center;
+        display: block;
+    }
+}
+
+
     </style>
 
     <div class="container-box"> 
@@ -140,7 +185,7 @@
                         </asp:LinkButton>
                     </div>
                     <div class="option">
-                        <p>Apresente este QrCode para o acesso</p>
+                        <p>Ou se preferir, leia utilize o QrCode abaixo:</p>
                         <asp:Image ID="imgQrCode" runat="server" Style="margin-top: 50px;" />
                     </div>
                 </div>

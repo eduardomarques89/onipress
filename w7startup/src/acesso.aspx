@@ -4,7 +4,7 @@
     <style>
         @font-face {
             font-family: 'CS-Interface';
-            src: url('src/font/fonts/CS-Interface.ttf') format('truetype'); 
+            src: url('src/font/fonts/CS-Interface.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
         }
@@ -77,7 +77,6 @@
             width: 197px;
             height: 60px;
             max-width: 300px;
-            height: 60px;
             margin-top: 5px;
             border-radius: 15px;
             border: 2px solid rgba(0, 0, 0, 0.2);
@@ -86,16 +85,18 @@
             transition: border-color 0.3s;
         }
 
-        .input-text:hover, 
+        .input-text:hover,
         .input-text:focus {
-            border-color: #0176AB;  
+            border-color: #0176AB;
             outline: none;
         }
-        
-        .input-companies, .input-block, .input-unity {
+
+        .input-companies,
+        .input-block,
+        .input-unity {
             width: 300px;
             height: 60px;
-            border-radius: 15px;            
+            border-radius: 15px;
             margin-left: 54px;
             border: 2px solid rgba(0, 0, 0, 0.2);
             padding: 0 20px;
@@ -113,7 +114,7 @@
         .button-advance {
             width: 150px;
             height: 50px;
-            margin-left: 500px;
+            margin-left: 70%;
             background-color: #0176AB;
             color: #FFFFFF;
             border: none;
@@ -126,6 +127,45 @@
         .cs-send {
             padding-left: 10px;
         }
+
+        @media (max-width: 700px) {
+            .container-box {
+                margin-top: 200px;
+                margin-left: -100px;
+                margin-right: auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                height: auto;
+                width: 100%;
+                max-width: 100%;
+                padding: 10px;
+            }
+
+            .divisor-side {
+                display: none;
+            }
+
+            .content-register {
+                width: 100%;
+                padding: 20px;
+                box-sizing: border-box;
+                text-align: left;
+            }
+
+            .button-advance {
+                margin-left: 50%;
+                /*width: 100%;
+                margin-left: 0;
+                margin-top: 20px;
+                padding: 10px;
+                text-align: center;
+                box-sizing: border-box;*/
+            }
+        }
+
+
     </style>
 
     <div class="container-box">
