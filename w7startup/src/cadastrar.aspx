@@ -178,36 +178,55 @@
             }
         }
 
-        @media (max-width: 500px) {
+        @media (max-width: 700px) {
             .box-bg {
                 width: 80%;
-                height: 600px;
-                border-radius: 10px;
+                height: auto;
+                border-radius: 15px;
                 box-shadow: none;
+                display: block;
+                padding: 20px;
                 align-items: center;
+                justify-content: center;
+            }
+
+            .divisor-side img {
+                display: none;
+            }
+
+            .content-register {
+                align-items: center;
+                padding: 10px;
+                width: 100%;
             }
 
             .content-register h3 {
-                font-size: 1.563rem;
-                margin: 0;
-                font-family: 'CS-Interface', sans-serif;
+                font-size: 1.5rem;
+                text-align: center;
+                margin-bottom: 20px;
             }
 
             .input-name, .input-cpf, .input-tell {
-                height: 45px;
-                font-size: 1rem;
-            }
-
-            .content-register input::placeholder {
-                font-size: 0.813rem;
-                opacity: 40%;
+                width: 100%;
+                height: 50px;
+                margin-top: 15px;
             }
 
             .button-advance {
-                padding: 8px;
-                font-size: 0.875rem;
+                width: 100%;
+                padding: 12px;
+                font-size: 1rem;
+                margin-top: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .button-advance img {
+                margin-left: 10px;
             }
         }
+
 
     </style>
 
