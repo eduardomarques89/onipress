@@ -56,22 +56,25 @@ namespace global
                 try
                 {
                     Database db = DatabaseFactory.CreateDatabase("ConnectionString");
+                    int idUsuario = Convert.ToInt32(Session["Id"]);
 
                     DbCommand insertCommand = db.GetSqlStringCommand(
-                        "INSERT INTO OniPres_Acesso (data_initial, data_final, id_companies, id_block, id_unity, id_device) VALUES (@data_i, @data_f, @companies, @block, @unity, @device)");
+                        "UPDATE OniPres_Acesso SET data_initial = @data_i, data_final = @data_f, id_companies = @companies, id_block = @block, id_unity = @unity, id_device = @device WHERE id_uduario = @id;");
 
-                    db.AddInParameter(insertCommand, "@data_i", DbType.String, data_initial);
-                    db.AddInParameter(insertCommand, "@data_f", DbType.String, data_final);
+                    db.AddInParameter(insertCommand, "@data_i", DbType.String, txtDataInicial.Text);
+                    db.AddInParameter(insertCommand, "@data_f", DbType.String, txtDataFinal.Text);
                     db.AddInParameter(insertCommand, "@companies", DbType.String, txtCompanies.Text);
                     db.AddInParameter(insertCommand, "@block", DbType.String, txtBlock.Text);
                     db.AddInParameter(insertCommand, "@unity", DbType.String, txtUnity.Text);
                     db.AddInParameter(insertCommand, "@device", DbType.String, 0);
+                    db.AddInParameter(insertCommand, "@id", DbType.Int32, idUsuario); 
+
 
                     db.ExecuteNonQuery(insertCommand);
 
                     //await EnviarParaAPI(txtName.Text);
 
-                    lblReposta.Text = "Dados enviados com sucesso!";
+                    Response.Redirect("identidade.aspx", true);
                 }
                 catch (Exception ex)
                 {

@@ -9,6 +9,7 @@ using System.IO;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Windows.Controls;
 
 namespace global
 {
@@ -16,9 +17,9 @@ namespace global
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack) // Verifica se é o primeiro carregamento da página
+            if (!IsPostBack)
             {
-                GerarQrCode(); // Gera o QR Code
+                
             }
         }
 
@@ -26,28 +27,49 @@ namespace global
         {
             if (fileUpload1.HasFile)
             {
-                HttpPostedFile file = fileUpload1.PostedFile;
-
-                byte[] fileData = null;
-                using (BinaryReader reader = new BinaryReader(file.InputStream))
+                try
                 {
-                    fileData = reader.ReadBytes(file.ContentLength);
-                }
+                    string fileName = Path.GetFileName(fileUpload1.FileName);
 
-                SalvarImagemNoBanco(fileData);
+                    string folderPath = Server.MapPath("~/upload/");
+
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+
+                    string filePath = folderPath + fileName;
+                    fileUpload1.SaveAs(filePath);
+
+                    SalvarImagemNoBanco(filePath);
+
+                    lblReposta.Text = "Arquivo enviado com sucesso!";
+                }
+                catch (Exception ex)
+                {
+                    lblErro.Text = "Erro ao enviar arquivo: " + ex.Message;
+                }
+            }
+            else
+            {
+                lblErro.Text = "Nenhum arquivo foi selecionado.";
             }
         }
 
-        private void SalvarImagemNoBanco(byte[] imageData)
+        private void SalvarImagemNoBanco(string caminhoArquivo)
         {
             try
             {
                 Database db = DatabaseFactory.CreateDatabase("ConnectionString");
 
-                DbCommand insertCommand = db.GetSqlStringCommand(
-                    "INSERT INTO OniPres_Acesso (link_acesso) VALUES (@Imagem)");
+                int idUsuario = Convert.ToInt32(Session["Id"]);
 
-                db.AddInParameter(insertCommand, "@Imagem", DbType.Binary, imageData);
+                DbCommand insertCommand = db.GetSqlStringCommand(
+                    "Update OniPres_Acesso set link_acesso = @Imagem where id_uduario = @id");
+
+                db.AddInParameter(insertCommand, "@Imagem", DbType.String, caminhoArquivo);
+                db.AddInParameter(insertCommand, "@id", DbType.Int32, idUsuario);  
+
                 db.ExecuteNonQuery(insertCommand);
 
                 lblReposta.Text = "Imagem salva com sucesso!";
@@ -58,10 +80,26 @@ namespace global
             }
         }
 
-        private void GerarQrCode()
+        protected void GerarQrCode_Click(object sender, EventArgs e)
         {
-            string qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=api";
+            string data = Guid.NewGuid().ToString();
+
+            string qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + data;
             imgQrCode.ImageUrl = qrCodeUrl;
+
+            Database db = DatabaseFactory.CreateDatabase("ConnectionString");
+            int idUsuario = Convert.ToInt32(Session["Id"]);
+
+            DbCommand insertCommand = db.GetSqlStringCommand(
+                    "Update OniPres_Acesso set qrcode = @qrcode where id_uduario = @id");
+
+            db.AddInParameter(insertCommand, "@qrcode", DbType.String, qrCodeUrl);
+            db.AddInParameter(insertCommand, "@id", DbType.Int32, idUsuario);
+
+            db.ExecuteNonQuery(insertCommand);
+
+
+            db.ExecuteNonQuery(insertCommand);
         }
     }
 }

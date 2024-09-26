@@ -57,7 +57,6 @@ namespace global
                         "INSERT INTO OniPres_pessoa (nome, cpf, celular, datacriacao) " +
                         "OUTPUT INSERTED.id VALUES (@name, @cpf, @tell, GETDATE())");
 
-                    // Adiciona os parâmetros
                     db.AddInParameter(insertCommand, "@name", DbType.String, txtName.Text);
                     db.AddInParameter(insertCommand, "@cpf", DbType.String, txtCpf.Text);
                     db.AddInParameter(insertCommand, "@tell", DbType.String, txtTell.Text);
@@ -74,7 +73,37 @@ namespace global
 
                         db.ExecuteNonQuery(acessoCommand);
 
-                        Response.Redirect("acesso.aspx", true);
+                        try
+                        {
+                            DbCommand selectCommand = db.GetSqlStringCommand(
+                                "SELECT * FROM OniPres_acesso WHERE id_uduario = @id");
+
+                            db.AddInParameter(selectCommand, "@id", DbType.Int32, Convert.ToInt32(insertedId));
+
+                            using (IDataReader reader = db.ExecuteReader(selectCommand))
+                            {
+                                if (reader.Read())
+                                {
+                                    string nome = reader["name"].ToString();
+                                   
+                                    Session["Nome"] = nome;
+                                    Session["Id"] = insertedId;
+
+                                    Response.Redirect("acesso.aspx", true);
+                                }
+                                else
+                                {
+                                    lblErro.Text = "Nenhum usuário encontrado com o ID inserido.";
+                                }
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            lblErro.Text = "Erro ao consultar dados no Banco Interno! Erro: " + ex.Message;
+                        }
+
+                        //await EnviarParaAPI(txtName.Text, insertedId.ToString());
                     }
                     else
                     {
@@ -90,7 +119,7 @@ namespace global
             }
         }
 
-    private async Task EnviarParaAPI(string name)
+    private async Task EnviarParaAPI(string name, string id)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -108,7 +137,7 @@ namespace global
                             new
                             {
                                 name = name,
-                                registration = "",
+                                registration = id,
                                 password = "",
                                 salt = ""
                             }

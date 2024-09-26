@@ -875,6 +875,7 @@
     <Folder Include="src\img\product\large\" />
     <Folder Include="src\img\product\small\" />
     <Folder Include="src\img\profile\" />
+    <Folder Include="upload\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -180,12 +180,16 @@
                             <asp:FileUpload ID="fileUpload1" runat="server" style="display: none;" />
                         </div>
                         <span id="file-name">Nenhum arquivo escolhido</span>
-                        <asp:LinkButton ID="EnviarFotos" CssClass="button" style="margin-top: 10px; margin-left: 20px" runat="server" OnClick="EnviarFotos_Click">
+                        <asp:FileUpload ID="fileUpload2" runat="server" style="display: none;" />
+                        <asp:LinkButton ID="EnviarFotos" CssClass="button" runat="server" OnClick="EnviarFotos_Click">
                             <span>Enviar Foto</span>
                         </asp:LinkButton>
                     </div>
                     <div class="option">
-                        <p>Ou se preferir, leia utilize o QrCode abaixo:</p>
+                        <p>Ou se preferir, leia o QrCode abaixo:</p>
+                        <asp:LinkButton ID="GerarQrCode" CssClass="button" runat="server" OnClick="GerarQrCode_Click">
+                            <span>Gerar QrCode</span>
+                        </asp:LinkButton>
                         <asp:Image ID="imgQrCode" runat="server" Style="margin-top: 50px;" />
                     </div>
                 </div>
