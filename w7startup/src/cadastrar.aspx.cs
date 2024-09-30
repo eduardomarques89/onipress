@@ -20,10 +20,8 @@ namespace global
 
         }
 
-        //protected async void EnviarDados_Click(object sender, EventArgs e
-        protected void EnviarDados_Click(object sender, EventArgs e)
+        protected async void EnviarDados_Click(object sender, EventArgs e)
         {
-            // Limpar as labels de erro
             lblNome.Text = "";
             lblCPF.Text = "";
             lblTell.Text = "";
@@ -85,11 +83,11 @@ namespace global
                                 if (reader.Read())
                                 {
                                     string nome = reader["name"].ToString();
-                                   
+
                                     Session["Nome"] = nome;
                                     Session["Id"] = insertedId;
 
-                                    Response.Redirect("acesso.aspx", true);
+                                    Response.Redirect("acesso.aspx", false);
                                 }
                                 else
                                 {
@@ -103,7 +101,7 @@ namespace global
                             lblErro.Text = "Erro ao consultar dados no Banco Interno! Erro: " + ex.Message;
                         }
 
-                        //await EnviarParaAPI(txtName.Text, insertedId.ToString());
+                        await EnviarParaAPI(txtName.Text);
                     }
                     else
                     {
@@ -119,14 +117,34 @@ namespace global
             }
         }
 
-    private async Task EnviarParaAPI(string name, string id)
+        private async Task EnviarParaAPI(string name)
         {
             using (HttpClient client = new HttpClient())
             {
                 try
                 {
-                    string host = "http://138.94.44.203:8113/";
-                    string session = "VmHUViPvsmZYP0s96UNHA5M2";
+                    string loginUrl = "http://192.168.0.204:8013/login.fcgi";
+
+                    var loginBody = new
+                    {
+                        login = "admin",
+                        password = "admin"
+                    };
+
+                    var loginContent = new StringContent(
+                        Newtonsoft.Json.JsonConvert.SerializeObject(loginBody),
+                        Encoding.UTF8,
+                        "application/json"
+                    );
+
+                    HttpResponseMessage loginResponse = await client.PostAsync(loginUrl, loginContent);
+                    loginResponse.EnsureSuccessStatusCode();
+
+                    string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
+                    var loginResponseData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(loginResponseBody);
+                    string session = loginResponseData.session;
+                    string host = "http://192.168.0.204:8013/";
+
                     string apiUrl = $"{host}/create_objects.fcgi?session={session}";
 
                     var requestBody = new
@@ -137,7 +155,7 @@ namespace global
                             new
                             {
                                 name = name,
-                                registration = id,
+                                registration = "",
                                 password = "",
                                 salt = ""
                             }
@@ -147,10 +165,10 @@ namespace global
                     var content = new StringContent(
                         Newtonsoft.Json.JsonConvert.SerializeObject(requestBody),
                         Encoding.UTF8,
-                        "application/json");
+                        "application/json"
+                    );
 
                     HttpResponseMessage response = await client.PostAsync(apiUrl, content);
-
                     response.EnsureSuccessStatusCode();
 
                     string responseBody = await response.Content.ReadAsStringAsync();

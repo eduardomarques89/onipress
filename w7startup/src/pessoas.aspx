@@ -104,7 +104,7 @@
         <SortedDescendingCellStyle BackColor="#D4DFE1" />
         <SortedDescendingHeaderStyle BackColor="#15524A" />
     </asp:GridView>
-    <asp:SqlDataSource ID="sdsDados" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="select p.id, p.nome, t.nome as acesso, p.cpf, p.celular, e.nome_fantasia as empresa , u.nome as unidade, b.nome as bloco, d.nome as dispositivo from OniPres_pessoa p join OniPres_tipoPessoa t on p.tipo_acesso = t.id join OniPres_empresa e on e.id = p.empresa join OniPres_unidade u on u.id = p.unidade join OniPres_bloco b on b.id = p.bloco join OniPres_dispostivo d on d.id = p.dispositivo where p.[status] = 'Ativo'">
+    <asp:SqlDataSource ID="sdsDados" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="select p.id, p.nome, t.nome as acesso, p.cpf, p.celular, e.nome_fantasia as empresa , u.nome as unidade, b.nome as bloco, d.nome as dispositivo from OniPres_pessoa p join OniPres_tipoPessoa t on p.tipo_acesso = t.id join OniPres_empresa e on e.id = p.empresa join OniPres_unidade u on u.id = p.unidade join OniPres_bloco b on b.id = p.bloco join OniPres_dispositivo d on d.id = p.dispositivo where p.[status] = 'Ativo'">
     </asp:SqlDataSource>
 
 
@@ -172,7 +172,7 @@
                         <label class="form-label">Dispositivo</label>
                         <asp:DropDownList ID="ddlDispositivo" runat="server" CssClass="form-control shadow dropdown-menu-end" DataSourceID="sdsDispositivo" DataTextField="nome" DataValueField="id"></asp:DropDownList>
                         <asp:SqlDataSource ID="sdsDispositivo" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" SelectCommand=
-                            "select id, nome from OniPres_dispostivo where [status] = 'Ativo' and bloco = @idbloco">
+                            "select id, nome from OniPres_dispositivo where [status] = 'Ativo' and bloco = @idbloco">
                             <SelectParameters>
                                 <asp:ControlParameter ControlID="ddlBloco" Name="idbloco" PropertyName="SelectedValue" />
                             </SelectParameters>

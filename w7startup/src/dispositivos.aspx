@@ -101,7 +101,7 @@
         <SortedDescendingCellStyle BackColor="#D4DFE1" />
         <SortedDescendingHeaderStyle BackColor="#15524A" />
     </asp:GridView>
-    <asp:SqlDataSource ID="sdsDados" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="select d.id, d.nome, d.numero_ip, d.identificador, e.nome_fantasia as empresa, u.nome as unidade, b.nome as bloco from OniPres_dispostivo d join OniPres_empresa e on e.id = d.empresa join OniPres_unidade u on u.id = d.unidade join OniPres_bloco b on b.id = d.bloco where d.[status] = 'Ativo'">
+    <asp:SqlDataSource ID="sdsDados" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="select d.id, d.nome, d.numero_ip, d.identificador, e.nome_fantasia as empresa, u.nome as unidade, b.nome as bloco from OniPres_dispositivo d join OniPres_empresa e on e.id = d.empresa join OniPres_unidade u on u.id = d.unidade join OniPres_bloco b on b.id = d.bloco where d.[status] = 'Ativo'">
     </asp:SqlDataSource>
 
 

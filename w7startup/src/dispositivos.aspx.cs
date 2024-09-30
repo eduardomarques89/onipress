@@ -38,7 +38,7 @@ namespace global
                 if (!string.IsNullOrEmpty(hdfId.Value))
                 {
                     // Atualizar registro existente
-                    string updateQuery = "UPDATE OniPres_dispostivo SET nome = @nome, empresa = @empresa, unidade = @unidade, bloco = @bloco, [status] = @status, numero_ip = @numero_ip WHERE id = @id";
+                    string updateQuery = "UPDATE OniPres_dispositivo SET nome = @nome, empresa = @empresa, unidade = @unidade, bloco = @bloco, [status] = @status, numero_ip = @numero_ip WHERE id = @id";
                     DbCommand updateCommand = db.GetSqlStringCommand(updateQuery);
 
                     db.AddInParameter(updateCommand, "@nome", DbType.String, txtNome.Text);
@@ -55,7 +55,7 @@ namespace global
                 else
                 {
                     // Adicionar novo registro
-                    string insertQuery = "INSERT INTO OniPres_dispostivo (nome, empresa, unidade, bloco, [status], numero_ip) VALUES (@nome, @empresa, @unidade, @bloco, @status, @numero_ip)";
+                    string insertQuery = "INSERT INTO OniPres_dispositivo (nome, empresa, unidade, bloco, [status], numero_ip) VALUES (@nome, @empresa, @unidade, @bloco, @status, @numero_ip)";
                     DbCommand insertCommand = db.GetSqlStringCommand(insertQuery);
 
                     db.AddInParameter(insertCommand, "@nome", DbType.String, txtNome.Text);
@@ -96,7 +96,7 @@ namespace global
 
         protected void lkbFiltro_Click(object sender, EventArgs e)
         {
-            sdsDados.SelectCommand = "select d.id, d.nome, e.nome_fantasia as empresa, u.nome as unidade, b.nome as bloco, d.numero_ip from OniPres_dispostivo d join OniPres_empresa e on e.id = d.empresa join OniPres_unidade u on u.id = d.unidade join OniPres_bloco b on b.id = d.bloco where d.[status] = 'Ativo' and d.nome like '%" + txtBuscar.Text + "%'";
+            sdsDados.SelectCommand = "select d.id, d.nome, e.nome_fantasia as empresa, u.nome as unidade, b.nome as bloco, d.numero_ip from OniPres_dispositivo d join OniPres_empresa e on e.id = d.empresa join OniPres_unidade u on u.id = d.unidade join OniPres_bloco b on b.id = d.bloco where d.[status] = 'Ativo' and d.nome like '%" + txtBuscar.Text + "%'";
             BindData();
         }
 
@@ -118,7 +118,7 @@ namespace global
         {
             // Implementar a lógica de exclusão do registro
             Database db = DatabaseFactory.CreateDatabase("ConnectionString");
-            string query = "DELETE FROM OniPres_dispostivo WHERE id = @id";
+            string query = "DELETE FROM OniPres_dispositivo WHERE id = @id";
             DbCommand cmd = db.GetSqlStringCommand(query);
             db.AddInParameter(cmd, "@id", DbType.Int32, id);
             db.ExecuteNonQuery(cmd);
@@ -130,7 +130,7 @@ namespace global
         private void EditarRegistro(int id)
         {
             Database db = DatabaseFactory.CreateDatabase("ConnectionString");
-            string query = "SELECT id, nome, empresa, unidade, bloco, numero_ip FROM OniPres_dispostivo WHERE id = @id";
+            string query = "SELECT id, nome, empresa, unidade, bloco, numero_ip FROM OniPres_dispositivo WHERE id = @id";
             DbCommand cmd = db.GetSqlStringCommand(query);
             db.AddInParameter(cmd, "@id", DbType.Int32, id);
             DataSet ds = db.ExecuteDataSet(cmd);

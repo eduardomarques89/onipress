@@ -6,6 +6,9 @@ using System.Data;
 using System.Data.Common;
 using System.Drawing;
 using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -80,7 +83,7 @@ namespace global
             }
         }
 
-        protected void GerarQrCode_Click(object sender, EventArgs e)
+        protected async void GerarQrCode_Click(object sender, EventArgs e)
         {
             string data = Guid.NewGuid().ToString();
 
@@ -88,7 +91,7 @@ namespace global
             imgQrCode.ImageUrl = qrCodeUrl;
 
             Database db = DatabaseFactory.CreateDatabase("ConnectionString");
-            int idUsuario = Convert.ToInt32(Session["Id"]);
+            int idUsuario = Convert.ToInt32(Session["IdUser"]);
 
             DbCommand insertCommand = db.GetSqlStringCommand(
                     "Update OniPres_Acesso set qrcode = @qrcode where id_uduario = @id");
@@ -98,8 +101,42 @@ namespace global
 
             db.ExecuteNonQuery(insertCommand);
 
-
-            db.ExecuteNonQuery(insertCommand);
+            await EnviarQrCodeParaAPI(idUsuario, qrCodeUrl);
         }
+
+        private async Task EnviarQrCodeParaAPI(int userId, string qrCodeUrl)
+        {
+            string session = Session["Session"].ToString();
+            string host = "http://138.94.44.203:8113/";
+            string apiUrl = $"{host}/create_objects.fcgi?session={session}";
+
+            var requestBody = new
+            {
+                @object = "qrcodes",
+                values = new[]
+                {
+            new
+            {
+                value = qrCodeUrl,
+                user_id = userId
+            }
+        }
+            };
+
+            using (HttpClient client = new HttpClient())
+            {
+                var content = new StringContent(
+                    Newtonsoft.Json.JsonConvert.SerializeObject(requestBody),
+                    Encoding.UTF8,
+                    "application/json"
+                );
+
+                HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+                response.EnsureSuccessStatusCode();
+
+                await response.Content.ReadAsStringAsync();
+            }
+        }
+
     }
 }

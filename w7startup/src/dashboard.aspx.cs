@@ -60,7 +60,7 @@ namespace global
                 }
 
                 using (IDataReader reader = DatabaseFactory.CreateDatabase("ConnectionString").ExecuteReader(CommandType.Text,
-                    "select count(*) as tot from OniPres_dispostivo where [status] = 'Ativo'"))
+                    "select count(*) as tot from OniPres_dispositivo where [status] = 'Ativo'"))
                 {
                     if (reader.Read())
                     {
