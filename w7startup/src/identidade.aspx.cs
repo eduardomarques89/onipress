@@ -107,7 +107,7 @@ namespace global
         private async Task EnviarQrCodeParaAPI(int userId, string qrCodeUrl)
         {
             string session = Session["Session"].ToString();
-            string host = "http://138.94.44.203:8113/";
+            string host = "http://192.168.0.204:8013/";
             string apiUrl = $"{host}/create_objects.fcgi?session={session}";
 
             var requestBody = new

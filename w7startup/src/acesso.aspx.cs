@@ -96,7 +96,7 @@ namespace global
         {
             try
             {
-                string host = "http://138.94.44.203:8113/";
+                string host = "http://192.168.0.204:8013/";
                 string apiUrl = $"{host}/create_objects.fcgi?session={session}";
 
                 var requestBody = new
@@ -136,7 +136,7 @@ namespace global
         {
             try
             {
-                string host = "http://138.94.44.203:8113/";
+                string host = "http://192.168.0.204:8013/";
                 string apiUrl = $"{host}/create_objects.fcgi?session={session}";
 
                 var requestBody = new
@@ -183,7 +183,7 @@ namespace global
         private async Task<int> CriarRegraDeAcesso(int userId)
         {
             string session = Session["Session"].ToString();
-            string host = "http://138.94.44.203:8113/";
+            string host = "http://192.168.0.204:8013/";
             string apiUrl = $"{host}/create_objects.fcgi?session={session}";
 
             var requestBody = new
@@ -221,7 +221,7 @@ namespace global
         private async Task CriarRegraDeAcessoTimeZone(int accessRuleId, int timeZoneId)
         {
             string session = Session["Session"].ToString();
-            string host = "http://138.94.44.203:8113/";
+            string host = "http://192.168.0.204:8013/";
             string apiUrl = $"{host}/create_objects.fcgi?session={session}";
 
             var requestBody = new
@@ -255,7 +255,7 @@ namespace global
         private async Task CriarRegraDeAcessoPorUsuario(int userId, int accessRuleId)
         {
             string session = Session["Session"].ToString();
-            string host = "http://138.94.44.203:8113/";
+            string host = "http://192.168.0.204:8013/";
             string apiUrl = $"{host}/create_objects.fcgi?session={session}";
 
             var requestBody = new
