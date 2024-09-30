@@ -55,7 +55,7 @@ namespace global
                 {
                     Database db = DatabaseFactory.CreateDatabase("ConnectionString");
                     int idUsuario = Convert.ToInt32(Session["Id"]);
-                    int idUser = Convert.ToInt32(Session["IdUser"]);
+                    string idUser = Convert.ToString(Session["ApiResponse"]);
                     string session = Session["Session"].ToString();
 
                     DbCommand insertCommand = db.GetSqlStringCommand(
@@ -92,7 +92,7 @@ namespace global
             }
         }
 
-        private async Task<int> EnviarParaAPI(int userId, string session)
+        private async Task<int> EnviarParaAPI(string userId, string session)
         {
             try
             {
@@ -180,7 +180,7 @@ namespace global
             }
         }
 
-        private async Task<int> CriarRegraDeAcesso(int userId)
+        private async Task<int> CriarRegraDeAcesso(string userId)
         {
             string session = Session["Session"].ToString();
             string host = "http://192.168.0.204:8013/";
@@ -252,7 +252,7 @@ namespace global
             }
         }
 
-        private async Task CriarRegraDeAcessoPorUsuario(int userId, int accessRuleId)
+        private async Task CriarRegraDeAcessoPorUsuario(string userId, int accessRuleId)
         {
             string session = Session["Session"].ToString();
             string host = "http://192.168.0.204:8013/";

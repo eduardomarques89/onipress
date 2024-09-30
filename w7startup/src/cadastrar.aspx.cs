@@ -86,8 +86,6 @@ namespace global
 
                                     Session["Nome"] = nome;
                                     Session["Id"] = insertedId;
-
-                                    Response.Redirect("acesso.aspx", false);
                                 }
                                 else
                                 {
@@ -152,14 +150,14 @@ namespace global
                         @object = "users",
                         values = new[]
                         {
-                            new
-                            {
-                                name = name,
-                                registration = "",
-                                password = "",
-                                salt = ""
-                            }
-                        }
+                    new
+                    {
+                        name = name,
+                        registration = "",
+                        password = "",
+                        salt = ""
+                    }
+                }
                     };
 
                     var content = new StringContent(
@@ -172,7 +170,13 @@ namespace global
                     response.EnsureSuccessStatusCode();
 
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(responseBody);
+
+                    var responseObject = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(responseBody);
+                    int id = responseObject.ids[0];
+
+                    Session["ApiResponseId"] = id;
+
+                    Response.Redirect("identidade.aspx", false);
                 }
                 catch (Exception ex)
                 {
@@ -180,6 +184,7 @@ namespace global
                 }
             }
         }
+
 
         protected void LimparCampos()
         {
