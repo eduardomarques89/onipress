@@ -60,8 +60,7 @@ namespace global
             {
                 Database db = DatabaseFactory.CreateDatabase("ConnectionString");
 
-                //int idUsuario = Convert.ToInt32(Session["Id"]);
-                int idUsuario = 47; // Exemplo de ID fixo, ajustar conforme necessário
+                int idUsuario = Convert.ToInt32(Session["Id"]);
 
                 DbCommand insertCommand = db.GetSqlStringCommand(
                     "UPDATE OniPres_Acesso SET link_acesso = @Imagem WHERE id_uduario = @id");
@@ -83,7 +82,6 @@ namespace global
         {
             try
             {
-                // Geração do QR Code
                 string data = Guid.NewGuid().ToString();
                 string qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + data;
                 imgQrCode.ImageUrl = qrCodeUrl;
@@ -92,7 +90,6 @@ namespace global
                 string IdUser = Convert.ToString(Session["ApiResponseId"]);
                 int idUsuario = Convert.ToInt16(Session["Id"]);
 
-                // Salvando o QR Code no banco
                 DbCommand insertCommand = db.GetSqlStringCommand(
                     "UPDATE OniPres_Acesso SET qrcode = @qrcode WHERE id_uduario = @id");
 
@@ -104,7 +101,7 @@ namespace global
                 // Login na API
                 using (HttpClient client = new HttpClient())
                 {
-                    string loginUrl = "http://192.168.0.204:8013/login.fcgi";
+                    string loginUrl = "http://192.168.0.207:8013/login.fcgi";
                     var loginBody = new
                     {
                         login = "admin",
@@ -130,8 +127,7 @@ namespace global
                         return;
                     }
 
-                    // Montando e enviando a requisição para a API
-                    string host = "http://192.168.0.204:8013/";
+                    string host = "http://192.168.0.207:8013/";
                     string apiUrl = $"{host}/create_objects.fcgi?session={session}";
 
                     var requestBody = new
@@ -147,7 +143,6 @@ namespace global
                         }
                     };
 
-                    // Convertendo o requestBody para JSON e imprimindo para debug
                     string requestBodyJson = Newtonsoft.Json.JsonConvert.SerializeObject(requestBody);
                     Console.WriteLine("Request Body: " + requestBodyJson);
 

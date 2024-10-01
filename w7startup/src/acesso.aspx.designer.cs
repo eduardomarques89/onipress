@@ -87,58 +87,58 @@ namespace global
         protected global::System.Web.UI.WebControls.TextBox txtHourFinal;
 
         /// <summary>
-        /// Controle txtCompanies.
+        /// Controle ddlCompanies.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCompanies;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCompanies;
 
         /// <summary>
-        /// Controle lblCompanies.
+        /// Controle sdsEmpresa.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCompanies;
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsEmpresa;
 
         /// <summary>
-        /// Controle txtBlock.
+        /// Controle ddlBlock.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBlock;
+        protected global::System.Web.UI.WebControls.DropDownList ddlBlock;
 
         /// <summary>
-        /// Controle lblBlock.
+        /// Controle sdsBlock.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBlock;
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsBlock;
 
         /// <summary>
-        /// Controle txtUnity.
+        /// Controle ddlUnity.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUnity;
+        protected global::System.Web.UI.WebControls.DropDownList ddlUnity;
 
         /// <summary>
-        /// Controle lblUnity.
+        /// Controle sdsUnitiy.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUnity;
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsUnitiy;
 
         /// <summary>
         /// Controle EnviarDados.

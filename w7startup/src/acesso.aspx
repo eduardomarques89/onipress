@@ -203,14 +203,26 @@
                 <h3 class="localization">Locais de Acesso</h3>
 
                 <div class="vertical-container">
-                    <asp:TextBox ID="txtCompanies" runat="server" class="input-companies" placeholder="Empresa/Condomínio" Required></asp:TextBox>
-                    <asp:Label ID="lblCompanies" runat="server" Text=""></asp:Label>
+                    <asp:DropDownList ID="ddlCompanies" Visible="true" class="input-block" AppendDataBoundItems="true" runat="server" DataSourceID="sdsEmpresa" DataTextField="nome_fantasia" DataValueField="id" AutoPostBack="True">
+                        <asp:ListItem Text="Selecione a empresa/condomínio" Value="0"></asp:ListItem> 
+                    </asp:DropDownList>
+                    <asp:SqlDataSource ID="sdsEmpresa" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" 
+                        SelectCommand="select id, nome_fantasia from OniPres_empresa">
+                    </asp:SqlDataSource>
 
-                    <asp:TextBox ID="txtBlock" runat="server" class="input-block" placeholder="Bloco" Required></asp:TextBox>
-                    <asp:Label ID="lblBlock" runat="server" Text=""></asp:Label>
+                    <asp:DropDownList ID="ddlBlock" Visible="true" class="input-block" AppendDataBoundItems="true" runat="server" DataSourceID="sdsBlock" DataTextField="nome" DataValueField="id" AutoPostBack="True">
+                        <asp:ListItem Text="Selecione o bloco" Value="0"></asp:ListItem> 
+                    </asp:DropDownList>
+                    <asp:SqlDataSource ID="sdsBlock" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" 
+                        SelectCommand="select id, nome from OniPres_bloco">
+                    </asp:SqlDataSource>
 
-                    <asp:TextBox ID="txtUnity" runat="server" class="input-unity" placeholder="Unidade" Required></asp:TextBox>
-                    <asp:Label ID="lblUnity" runat="server" Text=""></asp:Label>
+                    <asp:DropDownList ID="ddlUnity" Visible="true" class="input-block" AppendDataBoundItems="true" runat="server" DataSourceID="sdsUnitiy" DataTextField="nome" DataValueField="id" AutoPostBack="True">
+                        <asp:ListItem Text="Selecione a unidade" Value="0"></asp:ListItem> 
+                    </asp:DropDownList>
+                    <asp:SqlDataSource ID="sdsUnitiy" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" 
+                        SelectCommand="select id, nome from OniPres_unidade">
+                    </asp:SqlDataSource>
                 </div>
             </div>
 
