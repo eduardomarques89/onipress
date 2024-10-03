@@ -4,7 +4,7 @@
     <style>
         @font-face {
             font-family: 'CS-Interface';
-            src: url('src/font/fonts/CS-Interface.ttf') format('truetype'); 
+            src: url('/font/CS-Interface/fonts/CS-Interface.ttf') format('truetype'); 
             font-weight: normal;
             font-style: normal;
         }

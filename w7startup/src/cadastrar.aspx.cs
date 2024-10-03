@@ -120,7 +120,7 @@ namespace global
             {
                 try
                 {
-                    string loginUrl = "http://192.168.0.207:8013/login.fcgi";
+                    string loginUrl = "http://192.168.0.204:8013/login.fcgi";
 
                     var loginBody = new
                     {
@@ -140,7 +140,7 @@ namespace global
                     string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
                     var loginResponseData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(loginResponseBody);
                     string session = loginResponseData.session;
-                    string host = "http://192.168.0.207:8013/";
+                    string host = "http://192.168.0.204:8013/";
 
                     string apiUrl = $"{host}/create_objects.fcgi?session={session}";
 
@@ -173,7 +173,7 @@ namespace global
                     var responseObject = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(responseBody);
                     int id = responseObject.ids[0];
 
-                    Session["ApiResponseId"] = id;
+                    Session["UserId"] = id;
 
                     Response.Redirect("acesso.aspx", false);
                 }

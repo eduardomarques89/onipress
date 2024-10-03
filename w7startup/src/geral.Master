@@ -392,10 +392,6 @@
                                 <label class="mb-2 d-inline-block form-label">Rastreador de Carro</label>
                                 <div class="hover-reveal-buttons position-relative hover-reveal cursor-default">
                                     <div class="position-relative mb-3 mb-lg-5 rounded-sm">
-                                        <img
-                                            src="img/product/small/product-1.png"
-                                            class="img-fluid rounded-sm lower-opacity border border-separator-light"
-                                            alt="card image" />
                                         <div class="position-absolute reveal-content rounded-sm absolute-center-vertical text-center w-100">
                                             <a
                                                 target="_blank"
@@ -421,10 +417,7 @@
                                 <label class="mb-2 d-inline-block form-label">Rastreador de Van</label>
                                 <div class="hover-reveal-buttons position-relative hover-reveal cursor-default">
                                     <div class="position-relative mb-3 mb-lg-5 rounded-sm">
-                                        <img
-                                            src="img/product/small/product-1.png"
-                                            class="img-fluid rounded-sm lower-opacity border border-separator-light"
-                                            alt="card image" />
+
                                         <div class="position-absolute reveal-content rounded-sm absolute-center-vertical text-center w-100">
                                             <a
                                                 target="_blank"
@@ -450,10 +443,7 @@
                                 <label class="mb-2 d-inline-block form-label">Rastreador de Moto</label>
                                 <div class="hover-reveal-buttons position-relative hover-reveal cursor-default">
                                     <div class="position-relative mb-3 mb-lg-5 rounded-sm">
-                                        <img
-                                            src="img/product/small/product-1.png"
-                                            class="img-fluid rounded-sm lower-opacity border border-separator-light"
-                                            alt="card image" />
+
                                         <div class="position-absolute reveal-content rounded-sm absolute-center-vertical text-center w-100">
                                             <a
                                                 target="_blank"
@@ -479,10 +469,7 @@
                                 <label class="mb-2 d-inline-block form-label">Rastreador de Carro</label>
                                 <div class="hover-reveal-buttons position-relative hover-reveal cursor-default">
                                     <div class="position-relative mb-3 mb-lg-5 rounded-sm">
-                                        <img
-                                            src="img/product/small/product-1.png"
-                                            class="img-fluid rounded-sm lower-opacity border border-separator-light"
-                                            alt="card image" />
+
                                         <div class="position-absolute reveal-content rounded-sm absolute-center-vertical text-center w-100">
                                             <a
                                                 target="_blank"
@@ -508,10 +495,6 @@
                                 <label class="mb-2 d-inline-block form-label">Rastreador de Ônibus</label>
                                 <div class="hover-reveal-buttons position-relative hover-reveal cursor-default">
                                     <div class="position-relative mb-3 mb-lg-5 rounded-sm">
-                                        <img
-                                            src="img/product/small/product-1.png"
-                                            class="img-fluid rounded-sm lower-opacity border border-separator-light"
-                                            alt="card image" />
                                         <div class="position-absolute reveal-content rounded-sm absolute-center-vertical text-center w-100">
                                             <a
                                                 target="_blank"
@@ -537,10 +520,6 @@
                                 <label class="mb-2 d-inline-block form-label">Rastreador de Carro</label>
                                 <div class="hover-reveal-buttons position-relative hover-reveal cursor-default">
                                     <div class="position-relative mb-3 mb-lg-5 rounded-sm">
-                                        <img
-                                            src="img/product/small/product-1.png"
-                                            class="img-fluid rounded-sm lower-opacity border border-separator-light"
-                                            alt="card image" />
                                         <div class="position-absolute reveal-content rounded-sm absolute-center-vertical text-center w-100">
                                             <a
                                                 target="_blank"

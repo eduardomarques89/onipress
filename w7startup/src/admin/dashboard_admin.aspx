@@ -1,4 +1,4 @@
-﻿<%@ Page Async="true" Title="" Language="C#" MasterPageFile="~/src/principal.Master" AutoEventWireup="true" CodeBehind="dashboard_admin.aspx.cs" Inherits="global.dashboard_admin" %>
+﻿<%--<%@ Page Async="true" Title="" Language="C#" MasterPageFile="~/src/principal.Master" AutoEventWireup="true" CodeBehind="dashboard_admin.aspx.cs" Inherits="global.dashboard_admin" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <!-- Title and Top Buttons Start -->
@@ -932,7 +932,7 @@
                                 <div class="row g-0 sh-10 mb-3">
                                     <div class="col-auto">
                                         <a href="Products.Detail.html">
-                                            <img src="img/product/small/product-1.png" class="card-img rounded-md h-100 sw-8" alt="thumb" />
+                                            <img src="" class="card-img rounded-md h-100 sw-8" alt="thumb" />
                                         </a>
                                     </div>
                                     <div class="col">
@@ -1016,4 +1016,4 @@
         </div>
         <!-- Tips End -->
     </div>
-</asp:Content>
+</asp:Content>--%>

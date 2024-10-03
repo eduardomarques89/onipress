@@ -869,12 +869,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\img\banner\" />
-    <Folder Include="src\img\brand\" />
-    <Folder Include="src\img\favicon\" />
-    <Folder Include="src\img\product\large\" />
-    <Folder Include="src\img\product\small\" />
-    <Folder Include="src\img\profile\" />
     <Folder Include="upload\" />
   </ItemGroup>
   <PropertyGroup>

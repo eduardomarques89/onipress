@@ -2,15 +2,16 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <style>
-        @font-face {
+        /*@font-face {
             font-family: 'CS-Interface';
-            src: url('src/font/fonts/CS-Interface.ttf') format('truetype');
+            src: url('/font/CS-Interface/fonts/CS-Interface.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
-        }
+
+        }*/
 
         * {
-            font-family: 'CS-Interface', sans-serif;
+            /*font-family: 'CS-Interface', sans-serif;*/
         }
 
         body {
@@ -18,7 +19,7 @@
             margin: 0;
             padding: 0;
             height: 100vh;
-            font-family: 'CS-Interface', sans-serif;
+            /*font-family: 'CS-Interface', sans-serif;*/
             display: flex;
             justify-content: center;
             align-items: center;

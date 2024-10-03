@@ -14,14 +14,6 @@ namespace global
 {
     public partial class identidade : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-
-            }
-        }
-
         protected void EnviarFotos_Click(object sender, EventArgs e)
         {
             if (fileUpload1.HasFile)
@@ -87,7 +79,7 @@ namespace global
                 imgQrCode.ImageUrl = qrCodeUrl;
 
                 Database db = DatabaseFactory.CreateDatabase("ConnectionString");
-                string IdUser = Convert.ToString(Session["ApiResponseId"]);
+                string IdUser = Convert.ToString(Session["UserId"]);
                 int idUsuario = Convert.ToInt16(Session["Id"]);
 
                 DbCommand insertCommand = db.GetSqlStringCommand(
@@ -98,10 +90,9 @@ namespace global
 
                 db.ExecuteNonQuery(insertCommand);
 
-                // Login na API
                 using (HttpClient client = new HttpClient())
                 {
-                    string loginUrl = "http://192.168.0.207:8013/login.fcgi";
+                    string loginUrl = "http://192.168.0.204:8013/login.fcgi";
                     var loginBody = new
                     {
                         login = "admin",
@@ -127,7 +118,7 @@ namespace global
                         return;
                     }
 
-                    string host = "http://192.168.0.207:8013/";
+                    string host = "http://192.168.0.204:8013/";
                     string apiUrl = $"{host}/create_objects.fcgi?session={session}";
 
                     var requestBody = new
@@ -137,7 +128,7 @@ namespace global
                         {
                             new
                             {
-                                value = qrCodeUrl,
+                                value = data,
                                 user_id = Convert.ToInt64(IdUser)
                             }
                         }

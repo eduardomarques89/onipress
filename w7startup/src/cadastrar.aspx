@@ -4,7 +4,7 @@
     <style>
         @font-face {
             font-family: 'CS-Interface';
-            src: url('src/font/fonts/CS-Interface.ttf') format('truetype'); 
+            src: url('/font/CS-Interface/fonts/CS-Interface.ttf') format('truetype'); 
             font-weight: normal;
             font-style: normal;
         }
@@ -46,7 +46,7 @@
         .content-register h3 {
             font-size: 1.75rem;
             margin: 0;
-            font-family: 'CS-Interface', sans-serif;
+            /*font-family: 'CS-Interface', sans-serif;*/
         }
 
         .input-name, .input-cpf, .input-tell {

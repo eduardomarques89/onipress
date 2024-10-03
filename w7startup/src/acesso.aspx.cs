@@ -14,17 +14,13 @@ namespace global
     public partial class acesso : System.Web.UI.Page
     {
         private static readonly HttpClient client = new HttpClient();
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-        }
+        private string apiSession;
 
         protected async void EnviarDados_Click(object sender, EventArgs e)
         {
             lblErro.Text = string.Empty;
-            bool allFieldsValid = ValidarCampos();
 
-            if (!allFieldsValid)
+            if (!ValidarCampos())
             {
                 lblErro.Text = "Preencha todos os campos corretamente.";
                 return;
@@ -33,25 +29,46 @@ namespace global
             try
             {
                 int idUsuario = Convert.ToInt32(Session["Id"]);
-                string IdUser = Convert.ToString(Session["ApiResponseId"]);
+                string UserId = Session["UserId"]?.ToString();
+
+                if (string.IsNullOrEmpty(UserId))
+                {
+                    lblErro.Text = "Id do usuário inválida.";
+                    return;
+                }
 
                 string dataInicial = txtDataInicial.Text;
                 string dataFinal = txtDataFinal.Text;
 
                 await AtualizarDadosNoBanco(idUsuario, dataInicial, dataFinal);
 
-                int? timeZoneId = await EnviarParaAPI(IdUser);
-                if (timeZoneId > 0)
+                if (string.IsNullOrEmpty(apiSession))
                 {
-                    await CriarTimeSpan(dataInicial, dataFinal, timeZoneId.Value);
-                    int? accessRuleId = await CriarRegraDeAcesso(IdUser);
+                    apiSession = await ObterSessaoApi();
+                    if (string.IsNullOrEmpty(apiSession))
+                    {
+                        lblErro.Text = "Erro ao obter sessão da API.";
+                        return;
+                    }
+                }
+
+                int? timeZoneId = await CriarTimeZone(UserId);
+
+                if (timeZoneId.HasValue)
+                {                    
+                    await CriarTimeSpan(timeZoneId.Value);
+
+                    int? accessRuleId = await CriarRegraDeAcesso(UserId);
+
                     if (accessRuleId.HasValue)
                     {
                         await CriarRegraDeAcessoTimeZone(accessRuleId.Value, timeZoneId.Value);
-                        await CriarRegraDeAcessoPorUsuario(IdUser, accessRuleId.Value);
+                        await CriarRegraDeAcessoPorUsuario(UserId, accessRuleId.Value);
                     }
-
-                    Response.Redirect("identidade.aspx", true);
+                }
+                else
+                {
+                    lblErro.Text = "Erro ao obter o ID da API.";
                 }
             }
             catch (Exception ex)
@@ -62,10 +79,13 @@ namespace global
 
         private bool ValidarCampos()
         {
+            DateTime parsedDate;
             return !string.IsNullOrWhiteSpace(txtDataInicial.Text) &&
+                   DateTime.TryParse(txtDataInicial.Text, out parsedDate) &&
                    !string.IsNullOrWhiteSpace(txtHourInicial.Text) &&
+                   DateTime.TryParse(txtHourFinal.Text, out parsedDate) &&
                    !string.IsNullOrWhiteSpace(txtDataFinal.Text) &&
-                   !string.IsNullOrWhiteSpace(txtHourFinal.Text) &&
+                   DateTime.TryParse(txtDataFinal.Text, out parsedDate) &&
                    ddlCompanies.SelectedIndex > 0 &&
                    ddlBlock.SelectedIndex > 0 &&
                    ddlUnity.SelectedIndex > 0;
@@ -86,15 +106,15 @@ namespace global
                 db.AddInParameter(insertCommand, "@device", DbType.String, 0);
                 db.AddInParameter(insertCommand, "@id", DbType.Int32, idUsuario);
 
-                db.ExecuteNonQuery(insertCommand);
+                await Task.Run(() => db.ExecuteNonQuery(insertCommand));
             }
         }
 
-        private async Task<int?> EnviarParaAPI(string userId)
+        private async Task<string> ObterSessaoApi()
         {
             try
             {
-                string loginUrl = "http://192.168.0.207:8013/login.fcgi";
+                string loginUrl = "http://192.168.0.204:8013/login.fcgi";
                 var loginBody = new { login = "admin", password = "admin" };
 
                 var loginContent = new StringContent(
@@ -108,19 +128,24 @@ namespace global
 
                 string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
                 var loginResponseData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(loginResponseBody);
-                string session = loginResponseData?.session;
+                return loginResponseData?.session;
+            }
+            catch (Exception ex)
+            {
+                lblErro.Text = "Erro ao obter sessão da API: " + ex.Message;
+                return null;
+            }
+        }
 
-                if (string.IsNullOrEmpty(session))
-                {
-                    lblErro.Text = "Erro ao obter sessão da API.";
-                    return null;
-                }
-
-                string apiUrl = $"http://192.168.0.207:8013/create_objects.fcgi?session={session}";
+        private async Task<int?> CriarTimeZone(string UserId)
+        {
+            try
+            {
+                string apiUrl = $"http://192.168.0.204:8013/create_objects.fcgi?session={apiSession}";
                 var requestBody = new
                 {
                     @object = "time_zones",
-                    values = new[] { new { name = $"Entrada {userId}" } }
+                    values = new[] { new { name = $"Entrada {UserId}" } }
                 };
 
                 var content = new StringContent(
@@ -134,8 +159,10 @@ namespace global
 
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var responseData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(responseBody);
-
-                return responseData?.id != null ? (int?)Convert.ToInt32(responseData.id) : null;
+                
+                return responseData?.ids != null && responseData.ids.Count > 0
+                    ? (int?)Convert.ToInt32(responseData.ids[0])
+                    : null;
             }
             catch (Exception ex)
             {
@@ -144,34 +171,70 @@ namespace global
             }
         }
 
-
-        private async Task CriarTimeSpan(string start, string end, int timeZoneId)
+        private async Task CriarTimeSpan(int timeZoneId)
         {
             try
             {
-                string loginUrl = "http://192.168.0.207:8013/login.fcgi";
-                var loginBody = new { login = "admin", password = "admin" };
-
-                var loginContent = new StringContent(
-                    Newtonsoft.Json.JsonConvert.SerializeObject(loginBody),
-                    Encoding.UTF8,
-                    "application/json"
-                );
-
-                HttpResponseMessage loginResponse = await client.PostAsync(loginUrl, loginContent);
-                loginResponse.EnsureSuccessStatusCode();
-
-                string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-                var loginResponseData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(loginResponseBody);
-                string session = loginResponseData?.session;
-
-                if (string.IsNullOrEmpty(session))
+                TimeSpan horaInicial, horaFinal;
+                
+                if (!TimeSpan.TryParse(txtHourInicial.Text, out horaInicial))
                 {
-                    lblErro.Text = "Erro ao obter sessão da API.";
+                    lblErro.Text = "Hora inicial não é válida.";
                     return;
                 }
 
-                string apiUrl = $"http://192.168.0.207:8013/create_objects.fcgi?session={session}";
+                if (!TimeSpan.TryParse(txtHourFinal.Text, out horaFinal))
+                {
+                    lblErro.Text = "Hora final não é válida.";
+                    return;
+                }
+
+                int resultStart = (int)horaInicial.TotalSeconds;
+                int resultEnd = (int)horaFinal.TotalSeconds;
+
+                if (!DateTime.TryParse(txtDataInicial.Text, out DateTime dataInicial))
+                {
+                    lblErro.Text = "Data inicial não é válida.";
+                    return;
+                }
+
+                if (!DateTime.TryParse(txtDataFinal.Text, out DateTime dataFinal))
+                {
+                    lblErro.Text = "Data final não é válida.";
+                    return;
+                }
+
+                DayOfWeek diaSemanaInicial = dataInicial.DayOfWeek;
+                DayOfWeek diaSemanaFinal = dataFinal.DayOfWeek;
+
+                int sun = 0, mon = 0, tue = 0, wed = 0, thu = 0, fri = 0, sat = 0;
+
+                switch (diaSemanaInicial)
+                {
+                    case DayOfWeek.Sunday:
+                        sun = 1;
+                        break;
+                    case DayOfWeek.Monday:
+                        mon = 1;
+                        break;
+                    case DayOfWeek.Tuesday:
+                        tue = 1;
+                        break;
+                    case DayOfWeek.Wednesday:
+                        wed = 1;
+                        break;
+                    case DayOfWeek.Thursday:
+                        thu = 1;
+                        break;
+                    case DayOfWeek.Friday:
+                        fri = 1;
+                        break;
+                    case DayOfWeek.Saturday:
+                        sat = 1;
+                        break;
+                }
+
+                string apiUrl = $"http://192.168.0.204:8013/create_objects.fcgi?session={apiSession}";
                 var requestBody = new
                 {
                     @object = "time_spans",
@@ -180,9 +243,15 @@ namespace global
                         new
                         {
                             time_zone_id = timeZoneId,
-                            start = start,
-                            end = end,
-                            fri = 1
+                            start = resultStart,
+                            end = resultEnd,
+                            sun = sun,
+                            mon = mon,
+                            tue = tue,
+                            wed = wed,
+                            thu = thu,
+                            fri = fri,
+                            sat = sat,
                         }
                     }
                 };
@@ -202,31 +271,15 @@ namespace global
             }
         }
 
-        private async Task<int?> CriarRegraDeAcesso(string userId)
+        private async Task<int?> CriarRegraDeAcesso(string UserId)
         {
             try
             {
-                string loginUrl = "http://192.168.0.207:8013/login.fcgi";
-                var loginBody = new { login = "admin", password = "admin" };
-
-                var loginContent = new StringContent(
-                    Newtonsoft.Json.JsonConvert.SerializeObject(loginBody),
-                    Encoding.UTF8,
-                    "application/json"
-                );
-
-                HttpResponseMessage loginResponse = await client.PostAsync(loginUrl, loginContent);
-                loginResponse.EnsureSuccessStatusCode();
-
-                string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-                var loginResponseData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(loginResponseBody);
-                string session = loginResponseData?.session;
-
-                string apiUrl = $"http://192.168.0.207:8013/create_objects.fcgi?session={session}";
+                string apiUrl = $"http://192.168.0.204:8013/create_objects.fcgi?session={apiSession}";
                 var requestBody = new
                 {
                     @object = "access_rules",
-                    values = new[] { new { name = $"Entrada {userId}", type = 1, priority = 0 } }
+                    values = new[] { new { name = $"Entrada {UserId}", type = 1, priority = 0 } }
                 };
 
                 var content = new StringContent(
@@ -241,7 +294,11 @@ namespace global
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var responseData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(responseBody);
 
-                return responseData?.id; // Retorna null se id for nulo
+                return responseData?.ids != null && responseData.ids.Count > 0
+                ? (int?)Convert.ToInt32(responseData.ids[0])
+                : null;
+
+                lblErro.Text = "Criado";
             }
             catch (Exception ex)
             {
@@ -254,26 +311,10 @@ namespace global
         {
             try
             {
-                string loginUrl = "http://192.168.0.207:8013/login.fcgi";
-                var loginBody = new { login = "admin", password = "admin" };
-
-                var loginContent = new StringContent(
-                    Newtonsoft.Json.JsonConvert.SerializeObject(loginBody),
-                    Encoding.UTF8,
-                    "application/json"
-                );
-
-                HttpResponseMessage loginResponse = await client.PostAsync(loginUrl, loginContent);
-                loginResponse.EnsureSuccessStatusCode();
-
-                string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-                var loginResponseData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(loginResponseBody);
-                string session = loginResponseData?.session;
-
-                string apiUrl = $"http://192.168.0.207:8013/create_objects.fcgi?session={session}";
+                string apiUrl = $"http://192.168.0.204:8013/create_objects.fcgi?session={apiSession}";
                 var requestBody = new
                 {
-                    @object = "access_rules_timezones",
+                    @object = "access_rule_time_zones",
                     values = new[] { new { access_rule_id = accessRuleId, time_zone_id = timeZoneId } }
                 };
 
@@ -285,6 +326,7 @@ namespace global
 
                 HttpResponseMessage response = await client.PostAsync(apiUrl, content);
                 response.EnsureSuccessStatusCode();
+
             }
             catch (Exception ex)
             {
@@ -292,31 +334,15 @@ namespace global
             }
         }
 
-        private async Task CriarRegraDeAcessoPorUsuario(string userId, int accessRuleId)
+        private async Task CriarRegraDeAcessoPorUsuario(string UserId, int accessRuleId)
         {
             try
             {
-                string loginUrl = "http://192.168.0.207:8013/login.fcgi";
-                var loginBody = new { login = "admin", password = "admin" };
-
-                var loginContent = new StringContent(
-                    Newtonsoft.Json.JsonConvert.SerializeObject(loginBody),
-                    Encoding.UTF8,
-                    "application/json"
-                );
-
-                HttpResponseMessage loginResponse = await client.PostAsync(loginUrl, loginContent);
-                loginResponse.EnsureSuccessStatusCode();
-
-                string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
-                var loginResponseData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(loginResponseBody);
-                string session = loginResponseData?.session;
-
-                string apiUrl = $"http://192.168.0.207:8013/create_objects.fcgi?session={session}";
+                string apiUrl = $"http://192.168.0.204:8013/create_objects.fcgi?session={apiSession}";
                 var requestBody = new
                 {
-                    @object = "access_rules_users",
-                    values = new[] { new { access_rule_id = accessRuleId, user_id = userId } }
+                    @object = "user_access_rules",
+                    values = new[] { new { user_id = Convert.ToInt32(UserId), access_rule_id = accessRuleId } }
                 };
 
                 var content = new StringContent(
@@ -327,10 +353,12 @@ namespace global
 
                 HttpResponseMessage response = await client.PostAsync(apiUrl, content);
                 response.EnsureSuccessStatusCode();
+
+                Response.Redirect("identidade.aspx", true);
             }
             catch (Exception ex)
             {
-                lblErro.Text = "Erro ao criar regra de acesso por usuário: " + ex.Message;
+                lblErro.Text = "Erro ao associar regra de acesso ao usuário: " + ex.Message;
             }
         }
     }
