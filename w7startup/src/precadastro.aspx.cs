@@ -34,7 +34,6 @@ namespace global
 
                 if (!string.IsNullOrEmpty(hdfId.Value))
                 {
-                    // Atualizar registro existente
                     string updateQuery = "UPDATE OniPres_pessoa SET telefone = @telefone, tipo_acesso = @tipo WHERE id = @id";
                     DbCommand updateCommand = db.GetSqlStringCommand(updateQuery);
 
@@ -47,7 +46,6 @@ namespace global
                 }
                 else
                 {
-                    // Adicionar novo registro
                     string insertQuery = "INSERT INTO OniPres_precadastro (telefone, tipopessoa) VALUES (@telefone, @tipo)";
                     DbCommand insertCommand = db.GetSqlStringCommand(insertQuery);
 
