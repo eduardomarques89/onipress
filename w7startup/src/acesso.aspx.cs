@@ -354,7 +354,7 @@ namespace global
                 HttpResponseMessage response = await client.PostAsync(apiUrl, content);
                 response.EnsureSuccessStatusCode();
 
-                Response.Redirect("identidade.aspx", true);
+                Response.Redirect("cadastrarView.aspx", true);
             }
             catch (Exception ex)
             {
