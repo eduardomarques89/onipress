@@ -13,7 +13,7 @@ namespace global
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Código do Page_Load aqui
+            
         }
 
         protected void btnEntrar_Click(object sender, EventArgs e)

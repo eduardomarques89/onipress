@@ -11,7 +11,7 @@ namespace global
 {
 
 
-    public partial class acesso
+    public partial class acessos
     {
 
         /// <summary>

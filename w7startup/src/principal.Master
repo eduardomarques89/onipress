@@ -182,6 +182,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="precadastro.aspx">
+                                    <i data-acorn-icon="user" class="icon" data-acorn-size="18"></i>
+                                    <span class="label">Pré-Cadastro de Visitantes e PS</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="ocorrencias.aspx">
                                     <i data-acorn-icon="key" class="icon" data-acorn-size="18"></i>
                                     <span class="label">Ocorrências</span>

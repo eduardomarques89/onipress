@@ -184,6 +184,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="src\precadastro.aspx" />
+    <Content Include="src\video.aspx" />
     <Content Include="src\code_morador.aspx" />
     <Content Include="src\code.aspx" />
     <Content Include="src\homePage.aspx" />
@@ -204,6 +206,7 @@
     <Content Include="src\img\qrcode.png" />
     <Content Include="src\img\qrcode.svg" />
     <Content Include="src\img\qrcode_morador.png" />
+    <Content Include="src\img\video.mp4" />
     <Content Include="src\js\mascara.js" />
     <Content Include="src\tipoocorrencia.aspx" />
     <Content Include="src\tipopessoas.aspx" />
@@ -624,6 +627,20 @@
     <Compile Include="Model\FGeral\AccessToken.cs" />
     <Compile Include="Model\FPIX\Whatsapp.cs" />
     <Compile Include="Service\Zapweb.cs" />
+    <Compile Include="src\precadastro.aspx.cs">
+      <DependentUpon>precadastro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="src\precadastro.aspx.designer.cs">
+      <DependentUpon>precadastro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="src\video.aspx.cs">
+      <DependentUpon>video.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="src\video.aspx.designer.cs">
+      <DependentUpon>video.aspx</DependentUpon>
+    </Compile>
     <Compile Include="src\code_morador.aspx.cs">
       <DependentUpon>code_morador.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

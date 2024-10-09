@@ -11,7 +11,7 @@ using System.Web.UI;
 
 namespace global
 {
-    public partial class acesso : System.Web.UI.Page
+    public partial class acessos : System.Web.UI.Page
     {
         private static readonly HttpClient client = new HttpClient();
         private string apiSession;
@@ -114,7 +114,7 @@ namespace global
         {
             try
             {
-                string loginUrl = "http://192.168.0.204:8013/login.fcgi";
+                string loginUrl = "http://192.168.0.202:8013/login.fcgi";
                 var loginBody = new { login = "admin", password = "admin" };
 
                 var loginContent = new StringContent(
@@ -141,7 +141,7 @@ namespace global
         {
             try
             {
-                string apiUrl = $"http://192.168.0.204:8013/create_objects.fcgi?session={apiSession}";
+                string apiUrl = $"http://192.168.0.202:8013/create_objects.fcgi?session={apiSession}";
                 var requestBody = new
                 {
                     @object = "time_zones",
@@ -234,7 +234,7 @@ namespace global
                         break;
                 }
 
-                string apiUrl = $"http://192.168.0.204:8013/create_objects.fcgi?session={apiSession}";
+                string apiUrl = $"http://192.168.0.202:8013/create_objects.fcgi?session={apiSession}";
                 var requestBody = new
                 {
                     @object = "time_spans",
@@ -275,7 +275,7 @@ namespace global
         {
             try
             {
-                string apiUrl = $"http://192.168.0.204:8013/create_objects.fcgi?session={apiSession}";
+                string apiUrl = $"http://192.168.0.202:8013/create_objects.fcgi?session={apiSession}";
                 var requestBody = new
                 {
                     @object = "access_rules",
@@ -311,7 +311,7 @@ namespace global
         {
             try
             {
-                string apiUrl = $"http://192.168.0.204:8013/create_objects.fcgi?session={apiSession}";
+                string apiUrl = $"http://192.168.0.202:8013/create_objects.fcgi?session={apiSession}";
                 var requestBody = new
                 {
                     @object = "access_rule_time_zones",
@@ -338,7 +338,7 @@ namespace global
         {
             try
             {
-                string apiUrl = $"http://192.168.0.204:8013/create_objects.fcgi?session={apiSession}";
+                string apiUrl = $"http://192.168.0.202:8013/create_objects.fcgi?session={apiSession}";
                 var requestBody = new
                 {
                     @object = "user_access_rules",
