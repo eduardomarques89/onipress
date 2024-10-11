@@ -76,7 +76,7 @@ namespace global
             {
                 try
                 {
-                    string loginUrl = "http://192.168.0.202:8013/login.fcgi";
+                    string loginUrl = "http://192.168.0.204:8013/login.fcgi";
 
                     var loginBody = new
                     {
@@ -97,17 +97,16 @@ namespace global
                     var loginResponseData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(loginResponseBody);
                     string session = loginResponseData.session;
 
-                    string host = "http://192.168.0.202:8013/";
+                    string host = "http://192.168.0.204:8013/";
                     string userId = Session["UserId"]?.ToString();
-                    string apiUrl = $"{host}/user_set_image.fcgi?user_id={userId}&match=1&timestamp=1624997578&session={session}";
+                    string apiUrl = $"{host}/user_set_image.fcgi?user_id={userId}&match=1&timestamp={userId}&session={session}";
 
                     using (var multipartFormDataContent = new MultipartFormDataContent())
                     {
-                        // Path to the uploaded file
                         var imagePath = Server.MapPath("~/upload/" + fileUpload1.FileName);
                         var imageContent = new ByteArrayContent(System.IO.File.ReadAllBytes(imagePath));
                         imageContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
-
+                        
                         multipartFormDataContent.Add(imageContent, "image", fileUpload1.FileName);
 
                         HttpResponseMessage apiResponse = await client.PostAsync(apiUrl, multipartFormDataContent);
@@ -123,6 +122,7 @@ namespace global
                 }
             }
         }
+
 
         protected async void GerarQrCode_Click(object sender, EventArgs e)
         {
@@ -146,7 +146,7 @@ namespace global
 
                 using (HttpClient client = new HttpClient())
                 {
-                    string loginUrl = "http://192.168.0.202:8013/login.fcgi";
+                    string loginUrl = "http://192.168.0.204:8013/login.fcgi";
                     var loginBody = new
                     {
                         login = "admin",
@@ -172,7 +172,7 @@ namespace global
                         return;
                     }
 
-                    string host = "http://192.168.0.202:8013/";
+                    string host = "http://192.168.0.204:8013/";
                     string apiUrl = $"{host}/create_objects.fcgi?session={session}";
 
                     var requestBody = new

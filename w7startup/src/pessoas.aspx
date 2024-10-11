@@ -26,7 +26,7 @@
                         type="button"
                         class="btn btn-outline-primary btn-icon btn-icon-start ms-0 ms-sm-1 w-100 w-md-auto"
                         data-bs-toggle="modal"
-                        data-bs-target='<%= "#" + pnlModal.ClientID %>'>
+                        data-bs-target='<%= "#" + pnlModalTipoPessoa.ClientID %>'>
                         <i data-acorn-icon="plus"></i>
                         <span>Criar Pessoas</span>
                     </button>
@@ -108,29 +108,48 @@
     </asp:SqlDataSource>
 
 
-    <!-- Modal -->
-    <asp:Panel ID="pnlModal" runat="server" CssClass="modal modal-right fade" role="dialog" aria-hidden="true">
+    <!-- Modal Tipo de Pessoa-->
+    <asp:Panel ID="pnlModalTipoPessoa" runat="server" CssClass="modal modal-right fade" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Adicionar Empresas</h5>
+                    <h5 class="modal-title">Adicionar Pessoa</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Nome completo</label>
-                        <asp:TextBox ID="txtNomeCliente" runat="server" CssClass="form-control"></asp:TextBox>
-                    </div>       
+                         
                     <div class="mb-3">
                         <label class="form-label">Tipo de Pessoas</label>
                         <asp:DropDownList ID="ddlTipo" runat="server" CssClass="form-control shadow dropdown-menu-end" DataSourceID="sdsTipo" DataTextField="nome" DataValueField="id"></asp:DropDownList>
                         <asp:SqlDataSource ID="sdsTipo" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" SelectCommand=
                             "select id, nome from OniPres_tipoPessoa"></asp:SqlDataSource>
                     </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <asp:Label ID="lblMensagem" runat="server" Text=""></asp:Label>
+                    <br />
+                    <asp:Button ID="btnAvancarPessoa" CssClass="btn btn-icon btn-icon-end btn-primary" runat="server" OnClick="btnAvancar_Click" Text="Avançar"></asp:Button>
+                </div>
+            </div>
+        </div>
+    </asp:Panel>
 
+    <%-- Modal Pessoa --%>
+     <asp:Panel ID="pnlModalPessoa" runat="server" CssClass="modal modal-right fade" role="dialog" aria-hidden="true">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">Adicionar Pessoa</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nome completo</label>
+                        <asp:TextBox ID="txtNome" runat="server" CssClass="form-control"></asp:TextBox>
+                    </div>  
                     <div class="mb-3">
                         <label class="form-label">CPF</label>
-                        <asp:TextBox ID="txtCPFCNPJ" runat="server" MaxLength="14" onkeyup="formataCPF(this,event);" CssClass="form-control"></asp:TextBox>
+                        <asp:TextBox ID="txtCPF" runat="server" MaxLength="14" onkeyup="formataCPF(this,event);" CssClass="form-control"></asp:TextBox>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Celular</label>
@@ -141,7 +160,55 @@
                         <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control"></asp:TextBox>
                     </div>
 
-                    <!-- Local -->
+                    <div class="mb-3 w-100">
+                        <label class="form-label">Status</label>
+                        <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control shadow dropdown-menu-end">
+                            <asp:ListItem Text="Ativo" CssClass="dropdown-item"></asp:ListItem>
+                            <asp:ListItem Text="Inativo" CssClass="dropdown-item"></asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                 </div>
+                 <div class="modal-footer border-0">
+                     <asp:Label ID="lblMensagens" runat="server" Text=""></asp:Label>
+                     <br />
+                     <asp:Button ID="btnAvancaLocais" CssClass="btn btn-icon btn-icon-end btn-primary" runat="server" OnClick="btnAvancarLocal_Click" Text="Adicionar"></asp:Button>
+                 </div>
+             </div>
+         </div>
+     </asp:Panel>
+
+    <%-- Modal Morador --%>
+    <asp:Panel ID="pnlModalMorador" runat="server" CssClass="modal modal-right fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar Pessoa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body"> 
+                    <div>
+                        <label class="form-label">Sou o responsável por liberar acesso:</label>
+                        <asp:CheckBox ID="BoxAcesso" runat="server" Text="Liberar Acesso" CssClass="form-check-input" />
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <asp:Label ID="lblMensagems" runat="server" Text=""></asp:Label>
+                    <br />
+                    <asp:Button ID="btnAvancarLocal" CssClass="btn btn-icon btn-icon-end btn-primary" runat="server" OnClick="btnAvancarPessoa_Click" Text="Adicionar"></asp:Button>
+                </div>
+            </div>
+        </div>
+    </asp:Panel>
+
+    <%-- Modal Local --%>
+    <asp:Panel ID="pnlModalLocal" runat="server" CssClass="modal modal-right fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar Pessoa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Empresas</label>
                         <asp:DropDownList ID="ddlEmpresas" runat="server" CssClass="form-control shadow dropdown-menu-end" DataSourceID="sdsEmpresas" AutoPostBack="true" DataTextField="nome_fantasia" DataValueField="id" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged"></asp:DropDownList>
@@ -152,7 +219,7 @@
                         <label class="form-label">Unidades</label>
                         <asp:DropDownList ID="ddlUnidades" runat="server" CssClass="form-control shadow dropdown-menu-end" DataSourceID="sdsUnidades" DataTextField="nome" DataValueField="id"></asp:DropDownList>
                         <asp:SqlDataSource ID="sdsUnidades" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" SelectCommand=
-                            "select id, nome from OniPres_unidade where [status] = 'Ativo' and empresa = @idempresa">
+                            "select id, nome from OniPres_unidade where [status] = 'Ativo'">
                             <SelectParameters>
                                 <asp:ControlParameter ControlID="ddlEmpresas" Name="idempresa" PropertyName="SelectedValue" />
                             </SelectParameters>
@@ -162,7 +229,7 @@
                         <label class="form-label">Bloco</label>
                         <asp:DropDownList ID="ddlBloco" runat="server" CssClass="form-control shadow dropdown-menu-end" DataSourceID="sdsBloco" DataTextField="nome" DataValueField="id"></asp:DropDownList>
                         <asp:SqlDataSource ID="sdsBloco" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" SelectCommand=
-                            "select id, nome from OniPres_bloco where [status] = 'Ativo' and unidade = @idunidade">
+                            "select id, nome from OniPres_bloco where [status] = 'Ativo'">
                             <SelectParameters>
                                 <asp:ControlParameter ControlID="ddlUnidades" Name="idunidade" PropertyName="SelectedValue" />
                             </SelectParameters>
@@ -172,26 +239,17 @@
                         <label class="form-label">Dispositivo</label>
                         <asp:DropDownList ID="ddlDispositivo" runat="server" CssClass="form-control shadow dropdown-menu-end" DataSourceID="sdsDispositivo" DataTextField="nome" DataValueField="id"></asp:DropDownList>
                         <asp:SqlDataSource ID="sdsDispositivo" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" ProviderName="<%$ ConnectionStrings:ConnectionString.ProviderName %>" SelectCommand=
-                            "select id, nome from OniPres_dispositivo where [status] = 'Ativo' and bloco = @idbloco">
+                            "select id, nome from OniPres_dispositivo where [status] = 'Ativo'">
                             <SelectParameters>
                                 <asp:ControlParameter ControlID="ddlBloco" Name="idbloco" PropertyName="SelectedValue" />
                             </SelectParameters>
                         </asp:SqlDataSource>
                     </div>
-
-                    <div class="mb-3 w-100">
-                        <label class="form-label">Status</label>
-                        <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-control shadow dropdown-menu-end">
-                            <asp:ListItem Text="Ativo" CssClass="dropdown-item"></asp:ListItem>
-                            <asp:ListItem Text="Inativo" CssClass="dropdown-item"></asp:ListItem>
-                        </asp:DropDownList>
-                    </div>
                 </div>
-
                 <div class="modal-footer border-0">
-                    <asp:Label ID="lblMensagem" runat="server" Text=""></asp:Label>
+                    <asp:Label ID="lblSalvo" runat="server" Text=""></asp:Label>
                     <br />
-                    <asp:Button ID="btnSalvar" CssClass="btn btn-icon btn-icon-end btn-primary" runat="server" OnClick="btnSalvar_Click" Text="Adicionar"></asp:Button>
+                    <asp:Button ID="lblAdicionar" CssClass="btn btn-icon btn-icon-end btn-primary" runat="server" OnClick="btnSalvar_Click" Text="Adicionar"></asp:Button>
                 </div>
             </div>
         </div>

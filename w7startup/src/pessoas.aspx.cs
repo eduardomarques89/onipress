@@ -38,12 +38,12 @@ namespace global
                 if (!string.IsNullOrEmpty(hdfId.Value))
                 {
                     // Atualizar registro existente
-                    string updateQuery = "UPDATE OniPres_pessoa SET nome = @nome, tipo_acesso = @tipo, cpf = @cpf, celular = @celular, email = @email, empresa = @empresa, unidade = @unidade, bloco = @bloco, dispositivo = @dispositivo, [status] = @status WHERE id = @id";
+                    string updateQuery = "UPDATE OniPres_pessoa SET nome = @nome, tipo_acesso = @tipo, cpf = @cpf, celular = @celular, email = @email, empresa = @empresa, unidade = @unidade, bloco = @bloco, dispositivo = @dispositivo, [status] = @status, libera_acesso = @libera WHERE id = @id";
                     DbCommand updateCommand = db.GetSqlStringCommand(updateQuery);
 
-                    db.AddInParameter(updateCommand, "@nome", DbType.String, txtNomeCliente.Text);
+                    db.AddInParameter(updateCommand, "@nome", DbType.String, txtNome.Text);
                     db.AddInParameter(updateCommand, "@tipo", DbType.String, ddlTipo.SelectedValue);
-                    db.AddInParameter(updateCommand, "@cpf", DbType.String, txtCPFCNPJ.Text);
+                    db.AddInParameter(updateCommand, "@cpf", DbType.String, txtCPF.Text);
                     db.AddInParameter(updateCommand, "@celular", DbType.String, txtCelular.Text);
                     db.AddInParameter(updateCommand, "@email", DbType.String, txtEmail.Text);
                     db.AddInParameter(updateCommand, "@empresa", DbType.String, ddlEmpresas.SelectedValue);
@@ -51,6 +51,7 @@ namespace global
                     db.AddInParameter(updateCommand, "@bloco", DbType.String, ddlBloco.SelectedValue);
                     db.AddInParameter(updateCommand, "@dispositivo", DbType.String, ddlDispositivo.SelectedValue);
                     db.AddInParameter(updateCommand, "@status", DbType.String, ddlStatus.SelectedValue);
+                    db.AddInParameter(updateCommand, "@libera", DbType.String, BoxAcesso.Checked);
                     db.AddInParameter(updateCommand, "@id", DbType.Int32, Convert.ToInt32(hdfId.Value));
 
                     db.ExecuteNonQuery(updateCommand);
@@ -59,12 +60,12 @@ namespace global
                 else
                 {
                     // Adicionar novo registro
-                    string insertQuery = "INSERT INTO OniPres_pessoa (nome, tipo_acesso, cpf, celular, email, empresa, unidade, bloco, dispositivo, [status]) VALUES (@nome, @tipo, @cpf, @celular, @email, @empresa, @unidade, @bloco, @dispositivo, @status)";
+                    string insertQuery = "INSERT INTO OniPres_pessoa (nome, tipo_acesso, cpf, celular, email, empresa, unidade, bloco, dispositivo, [status], libera_acesso) VALUES (@nome, @tipo, @cpf, @celular, @email, @empresa, @unidade, @bloco, @dispositivo, @status, @libera)";
                     DbCommand insertCommand = db.GetSqlStringCommand(insertQuery);
 
-                    db.AddInParameter(insertCommand, "@nome", DbType.String, txtNomeCliente.Text);
+                    db.AddInParameter(insertCommand, "@nome", DbType.String, txtNome.Text);
                     db.AddInParameter(insertCommand, "@tipo", DbType.String, ddlTipo.SelectedValue);
-                    db.AddInParameter(insertCommand, "@cpf", DbType.String, txtCPFCNPJ.Text);
+                    db.AddInParameter(insertCommand, "@cpf", DbType.String, txtCPF.Text);
                     db.AddInParameter(insertCommand, "@celular", DbType.String, txtCelular.Text);
                     db.AddInParameter(insertCommand, "@email", DbType.String, txtEmail.Text);
                     db.AddInParameter(insertCommand, "@empresa", DbType.String, ddlEmpresas.SelectedValue);
@@ -72,6 +73,7 @@ namespace global
                     db.AddInParameter(insertCommand, "@bloco", DbType.String, ddlBloco.SelectedValue);
                     db.AddInParameter(insertCommand, "@dispositivo", DbType.String, ddlDispositivo.SelectedValue);
                     db.AddInParameter(insertCommand, "@status", DbType.String, ddlStatus.SelectedValue);
+                    db.AddInParameter(insertCommand, "@libera", DbType.String, BoxAcesso.Checked);
 
                     db.ExecuteNonQuery(insertCommand);
                     lblMensagem.Text = "Adicionado com sucesso!";
@@ -82,7 +84,7 @@ namespace global
 
                 gdvDados.DataBind();
 
-                ScriptManager.RegisterStartupScript(this, GetType(), "CloseModal", "$('#" + pnlModal.ClientID + "').modal('hide');", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "CloseModal", "$('#" + pnlModalTipoPessoa.ClientID + "').modal('hide');", true);
             }
             catch (Exception ex)
             {
@@ -94,9 +96,9 @@ namespace global
 
         private void LimparCampos()
         {
-            txtNomeCliente.Text = string.Empty;
+            txtNome.Text = string.Empty;
             ddlTipo.SelectedIndex = 0;
-            txtCPFCNPJ.Text = string.Empty;
+            txtCPF.Text = string.Empty;
             txtCelular.Text = string.Empty;
             txtEmail.Text = string.Empty;
             ddlEmpresas.SelectedIndex = 0;
@@ -141,7 +143,7 @@ namespace global
         private void EditarRegistro(int id)
         {
             Database db = DatabaseFactory.CreateDatabase("ConnectionString");
-            string query = "SELECT id, nome, tipo_acesso, cpf, celular, email, empresa, unidade, bloco, dispositivo FROM OniPres_pessoa WHERE id = @id";
+            string query = "SELECT id, nome, tipo_acesso, cpf, celular, email, empresa, unidade, bloco, dispositivo, libera_acesso FROM OniPres_pessoa WHERE id = @id";
             DbCommand cmd = db.GetSqlStringCommand(query);
             db.AddInParameter(cmd, "@id", DbType.Int32, id);
             DataSet ds = db.ExecuteDataSet(cmd);
@@ -150,18 +152,26 @@ namespace global
             {
                 DataRow dr = ds.Tables[0].Rows[0];
                 hdfId.Value = dr["id"].ToString();
-                txtNomeCliente.Text = dr["nome"].ToString();
+                txtNome.Text = dr["nome"].ToString();
                 ddlTipo.SelectedValue = dr["tipo_acesso"].ToString();
-                txtCPFCNPJ.Text = dr["cpf"].ToString();
+                txtCPF.Text = dr["cpf"].ToString();
                 txtCelular.Text = dr["celular"].ToString();
                 txtEmail.Text = dr["email"].ToString();
                 ddlEmpresas.SelectedValue = dr["empresa"].ToString();
                 ddlUnidades.SelectedValue = dr["unidade"].ToString();
                 ddlBloco.SelectedValue = dr["bloco"].ToString();
                 ddlDispositivo.SelectedValue = dr["dispositivo"].ToString();
+                if (Convert.ToBoolean(dr["libera_acesso"]))
+                {
+                    BoxAcesso.Checked = true;
+                }
+                else
+                {
+                    BoxAcesso.Checked = false;
+                }
                 ddlStatus.SelectedValue = "Ativo";
 
-                ScriptManager.RegisterStartupScript(this, GetType(), "OpenModal", "$('#" + pnlModal.ClientID + "').modal('show');", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "OpenModal", "$('#" + pnlModalTipoPessoa.ClientID + "').modal('show');", true);
             }
         }
 
@@ -175,6 +185,30 @@ namespace global
             ddlUnidades.DataBind();
             ddlBloco.DataBind();
             ddlDispositivo.DataBind();
+        }
+
+        protected void btnAvancar_Click(object sender, EventArgs e)
+        {
+            int choice = ddlTipo.SelectedIndex;
+
+            if (choice == 2)
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowModalMorador", "$('#" + pnlModalMorador.ClientID + "').modal('show');", true);
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowModalVisitante", "$('#" + pnlModalPessoa.ClientID + "').modal('show');", true);
+            }
+        }
+
+        protected void btnAvancarPessoa_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowModalPessoa", "$('#" + pnlModalPessoa.ClientID + "').modal('show');", true);
+        }
+
+        protected void btnAvancarLocal_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowModalLocal", "$('#" + pnlModalLocal.ClientID + "').modal('show');", true);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace global
             int idUsuario = Convert.ToInt32(Session["Id"]);
 
             Database db = DatabaseFactory.CreateDatabase("ConnectionString");
-            string query = "SELECT nome, cpf, celular FROM OniPres_pessoa WHERE id = 148";
+            string query = "SELECT nome, cpf, celular FROM OniPres_pessoa WHERE id = @id";
             DbCommand cmd = db.GetSqlStringCommand(query);
             db.AddInParameter(cmd, "@id", DbType.Int32, idUsuario);
 

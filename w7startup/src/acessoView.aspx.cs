@@ -16,7 +16,7 @@ namespace global
 
                 Database db = DatabaseFactory.CreateDatabase("ConnectionString");
 
-                string query = "SELECT * FROM OniPres_Acesso WHERE id_uduario = 148";
+                string query = "SELECT * FROM OniPres_Acesso WHERE id_uduario = @id";
                 DbCommand cmd = db.GetSqlStringCommand(query);
                 db.AddInParameter(cmd, "@id", DbType.Int32, idUsuario);
 
