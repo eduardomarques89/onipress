@@ -60,7 +60,7 @@ namespace global
                 else
                 {
                     // Adicionar novo registro
-                    string insertQuery = "INSERT INTO OniPres_pessoa (nome, tipo_acesso, cpf, celular, email, empresa, unidade, bloco, dispositivo, [status], libera_acesso) VALUES (@nome, @tipo, @cpf, @celular, @email, @empresa, @unidade, @bloco, @dispositivo, @status, @libera)";
+                    string insertQuery = "INSERT INTO OniPres_pessoa (nome, tipo_acesso, cpf, celular, email, empresa, unidade, bloco, dispositivo, [status], iddependente, libera_acesso) VALUES (@nome, @tipo, @cpf, @celular, @email, @empresa, @unidade, @bloco, @dispositivo, @status, @dependente, @libera)";
                     DbCommand insertCommand = db.GetSqlStringCommand(insertQuery);
 
                     db.AddInParameter(insertCommand, "@nome", DbType.String, txtNome.Text);
@@ -72,6 +72,27 @@ namespace global
                     db.AddInParameter(insertCommand, "@unidade", DbType.String, ddlUnidades.SelectedValue);
                     db.AddInParameter(insertCommand, "@bloco", DbType.String, ddlBloco.SelectedValue);
                     db.AddInParameter(insertCommand, "@dispositivo", DbType.String, ddlDispositivo.SelectedValue);
+                    if (BoxDependente.Checked == true)
+                    {
+                        using (IDataReader reader = DatabaseFactory.CreateDatabase("ConnectionString")
+                            .ExecuteReader(CommandType.Text, @"select id from OniPres_pessoa where nome like '%" + txtMorador.Text + "%'"))
+                        {
+                            if (reader.Read())
+                            {
+                                db.AddInParameter(insertCommand, "@dependente", DbType.Int32, reader["id"]);
+                            }
+                            else
+                            {
+                                lblMensagem.Text = "Morador não encontrado.";
+                                return;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        db.AddInParameter(insertCommand, "@dependente", DbType.Int32, 0);
+                    }
+
                     db.AddInParameter(insertCommand, "@status", DbType.String, ddlStatus.SelectedValue);
                     db.AddInParameter(insertCommand, "@libera", DbType.String, BoxAcesso.Checked);
 
@@ -91,8 +112,6 @@ namespace global
                 lblMensagem.Text = "Erro ao salvar: " + ex.Message;
             }
         }
-
-
 
         private void LimparCampos()
         {
@@ -201,14 +220,19 @@ namespace global
             }
         }
 
-        protected void btnAvancarPessoa_Click(object sender, EventArgs e)
+        protected void btnAvancarDependente_Click(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowModalPessoa", "$('#" + pnlModalPessoa.ClientID + "').modal('show');", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowModalLocal", "$('#" + pnlModalDependente.ClientID + "').modal('show');", true);
+        }
+
+        protected void btnAvancarPessoas_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowModalLocal", "$('#" + pnlModalPessoa.ClientID + "').modal('show');", true);
         }
 
         protected void btnAvancarLocal_Click(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowModalLocal", "$('#" + pnlModalLocal.ClientID + "').modal('show');", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "ShowModalPessoa", "$('#" + pnlModalLocal.ClientID + "').modal('show');", true);
         }
     }
 }

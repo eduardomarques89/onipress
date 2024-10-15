@@ -134,6 +134,58 @@
         </div>
     </asp:Panel>
 
+        <%-- Modal Morador --%>
+    <asp:Panel ID="pnlModalMorador" runat="server" CssClass="modal modal-right fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar Pessoa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body"> 
+                    <div>
+                        <label class="form-label">Sou o responsável por liberar acesso:</label>
+                        <asp:CheckBox ID="BoxAcesso" runat="server" Text="Liberar Acesso" CssClass="form-check-input" />
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <asp:Label ID="lblMensagems" runat="server" Text=""></asp:Label>
+                    <br />
+                    <asp:Button ID="btnAvancarDependente" CssClass="btn btn-icon btn-icon-end btn-primary" runat="server" OnClick="btnAvancarDependente_Click" Text="Adicionar"></asp:Button>
+                </div>
+            </div>
+        </div>
+    </asp:Panel>
+
+    <!-- Modal Dependente-->
+    <asp:Panel ID="pnlModalDependente" runat="server" CssClass="modal modal-right fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar Pessoa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Sou dependente de outro morador?</label>
+                        <asp:CheckBox ID="BoxDependente" runat="server" Text="Liberar Acesso" CssClass="form-check-input" />
+                    </div>
+
+                    <!-- Campo a ser exibido/ocultado -->
+                    <div class="mb-3" id="nomeMoradorGroup" style="display: none;">
+                        <label class="form-label">Nome do Morador</label>
+                        <asp:TextBox ID="txtMorador" runat="server" CssClass="form-control"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                    <br />
+                    <asp:Button ID="btnAvancarPessoas" CssClass="btn btn-icon btn-icon-end btn-primary" runat="server" OnClick="btnAvancarPessoas_Click" Text="Avançar"></asp:Button>
+                </div>
+            </div>
+        </div>
+    </asp:Panel>
+
     <%-- Modal Pessoa --%>
      <asp:Panel ID="pnlModalPessoa" runat="server" CssClass="modal modal-right fade" role="dialog" aria-hidden="true">
          <div class="modal-dialog">
@@ -176,29 +228,6 @@
              </div>
          </div>
      </asp:Panel>
-
-    <%-- Modal Morador --%>
-    <asp:Panel ID="pnlModalMorador" runat="server" CssClass="modal modal-right fade" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Adicionar Pessoa</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body"> 
-                    <div>
-                        <label class="form-label">Sou o responsável por liberar acesso:</label>
-                        <asp:CheckBox ID="BoxAcesso" runat="server" Text="Liberar Acesso" CssClass="form-check-input" />
-                    </div>
-                </div>
-                <div class="modal-footer border-0">
-                    <asp:Label ID="lblMensagems" runat="server" Text=""></asp:Label>
-                    <br />
-                    <asp:Button ID="btnAvancarLocal" CssClass="btn btn-icon btn-icon-end btn-primary" runat="server" OnClick="btnAvancarPessoa_Click" Text="Adicionar"></asp:Button>
-                </div>
-            </div>
-        </div>
-    </asp:Panel>
 
     <%-- Modal Local --%>
     <asp:Panel ID="pnlModalLocal" runat="server" CssClass="modal modal-right fade" role="dialog" aria-hidden="true">
@@ -254,4 +283,19 @@
             </div>
         </div>
     </asp:Panel>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const boxDependente = document.getElementById('<%= BoxDependente.ClientID %>');
+        const nomeMoradorGroup = document.getElementById('nomeMoradorGroup');
+
+        boxDependente.addEventListener('change', function () {
+            if (boxDependente.checked) {
+                nomeMoradorGroup.style.display = 'block';
+            } else {
+                nomeMoradorGroup.style.display = 'none';
+            }
+        });
+    });
+</script>
 </asp:Content>

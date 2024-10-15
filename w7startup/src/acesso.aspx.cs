@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI;
+using static System.Net.WebRequestMethods;
 
 namespace global
 {
@@ -52,6 +53,22 @@ namespace global
                     }
                 }
 
+                int token = 1;
+
+                string link = "https://w7onipress.azurewebsites.net/src/view.aspx?codigo=" + token;
+
+                Database db = DatabaseFactory.CreateDatabase("ConnectionString");
+
+                using (DbCommand insertCommandDisparos = db.GetSqlStringCommand(
+                    "INSERT INTO Onipres_Disparos (telefone, mensagem, data, status) values (@telefone, @mensagem, GETDATE(), @status) "))
+                {
+                    db.AddInParameter(insertCommandDisparos, "@telefone", DbType.String, dataInicial);
+                    db.AddInParameter(insertCommandDisparos, "@mensagem", DbType.String, "Olá, o seu acesso foi liberado! Acesse o link para liberar a cancela " + link);
+                    db.AddInParameter(insertCommandDisparos, "@status", DbType.String, "Enviando");
+
+                    await Task.Run(() => db.ExecuteNonQuery(insertCommandDisparos));
+                }
+
                 int? timeZoneId = await CriarTimeZone(UserId);
 
                 if (timeZoneId.HasValue)
@@ -85,10 +102,7 @@ namespace global
                    !string.IsNullOrWhiteSpace(txtHourInicial.Text) &&
                    DateTime.TryParse(txtHourFinal.Text, out parsedDate) &&
                    !string.IsNullOrWhiteSpace(txtDataFinal.Text) &&
-                   DateTime.TryParse(txtDataFinal.Text, out parsedDate) &&
-                   ddlCompanies.SelectedIndex > 0 &&
-                   ddlBlock.SelectedIndex > 0 &&
-                   ddlUnity.SelectedIndex > 0;
+                   DateTime.TryParse(txtDataFinal.Text, out parsedDate);
         }
 
         private async Task AtualizarDadosNoBanco(int idUsuario, string dataInicial, string dataFinal)
@@ -96,13 +110,13 @@ namespace global
             Database db = DatabaseFactory.CreateDatabase("ConnectionString");
 
             using (DbCommand insertCommand = db.GetSqlStringCommand(
-                "UPDATE OniPres_Acesso SET data_initial = @data_i, data_final = @data_f, id_companies = @companies, id_block = @block, id_unity = @unity, id_device = @device WHERE id_uduario = @id;"))
+                "UPDATE OniPres_Acesso SET data_initial = @data_i, data_final = @data_f WHERE id_uduario = @id;"))
             {
                 db.AddInParameter(insertCommand, "@data_i", DbType.String, dataInicial);
                 db.AddInParameter(insertCommand, "@data_f", DbType.String, dataFinal);
-                db.AddInParameter(insertCommand, "@companies", DbType.String, ddlCompanies.SelectedValue);
-                db.AddInParameter(insertCommand, "@block", DbType.String, ddlBlock.SelectedValue);
-                db.AddInParameter(insertCommand, "@unity", DbType.String, ddlUnity.SelectedValue);
+                //db.AddInParameter(insertCommand, "@companies", DbType.String, ddlCompanies.SelectedValue);
+                //db.AddInParameter(insertCommand, "@block", DbType.String, ddlBlock.SelectedValue);
+                //db.AddInParameter(insertCommand, "@unity", DbType.String, ddlUnity.SelectedValue);
                 db.AddInParameter(insertCommand, "@device", DbType.String, 0);
                 db.AddInParameter(insertCommand, "@id", DbType.Int32, idUsuario);
 

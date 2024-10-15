@@ -31,10 +31,6 @@ namespace global
 
                     txtDataFinal.Text = Convert.ToDateTime(row["data_final"]).ToString("yyyy-MM-dd");
                     //txtHourFinal.Text = TimeSpan.Parse(row["hora_final"].ToString()).ToString(@"hh\:mm");
-
-                    ddlCompanies.SelectedValue = row["id_companies"].ToString();
-                    ddlBlock.SelectedValue = row["id_block"].ToString();
-                    ddlUnity.SelectedValue = row["id_unity"].ToString();
                 }
             }
         }

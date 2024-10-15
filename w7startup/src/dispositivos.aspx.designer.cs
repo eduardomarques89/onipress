@@ -87,6 +87,15 @@ namespace global
         protected global::System.Web.UI.WebControls.TextBox txtNome;
 
         /// <summary>
+        /// Controle txtIdetificador.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtIdetificador;
+
+        /// <summary>
         /// Controle txtNumeroIP.
         /// </summary>
         /// <remarks>
@@ -94,6 +103,24 @@ namespace global
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNumeroIP;
+
+        /// <summary>
+        /// Controle ddlFuncao.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFuncao;
+
+        /// <summary>
+        /// Controle sdsFuncao.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource sdsFuncao;
 
         /// <summary>
         /// Controle ddlEmpresas.

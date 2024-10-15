@@ -199,25 +199,6 @@
                 </div>
             </div>
             
-            <div class="content-location">
-                <h3 class="localization">Locais de Acesso</h3>
-                <div class="vertical-container">
-                    <asp:DropDownList ID="ddlCompanies" CssClass="input-block" AppendDataBoundItems="true" runat="server" DataSourceID="sdsEmpresa" DataTextField="nome_fantasia" DataValueField="id" Enabled="false">
-                        <asp:ListItem Text="Selecione a empresa/condomínio" Value="0" />
-                    </asp:DropDownList>
-                    <asp:SqlDataSource ID="sdsEmpresa" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT id, nome_fantasia FROM OniPres_empresa" />
-
-                    <asp:DropDownList ID="ddlBlock" CssClass="input-block" AppendDataBoundItems="true" runat="server" DataSourceID="sdsBlock" DataTextField="nome" DataValueField="id" Enabled="false">
-                        <asp:ListItem Text="Selecione o bloco" Value="0" />
-                    </asp:DropDownList>
-                    <asp:SqlDataSource ID="sdsBlock" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT id, nome FROM OniPres_bloco" />
-
-                    <asp:DropDownList ID="ddlUnity" CssClass="input-block" AppendDataBoundItems="true" runat="server" DataSourceID="sdsUnitiy" DataTextField="nome" DataValueField="id" Enabled="false">
-                        <asp:ListItem Text="Selecione a unidade" Value="0" />
-                    </asp:DropDownList>
-                    <asp:SqlDataSource ID="sdsUnitiy" runat="server" ConnectionString="<%$ ConnectionStrings:ConnectionString %>" SelectCommand="SELECT id, nome FROM OniPres_unidade" />
-                </div>
-            </div>
 
             <asp:LinkButton ID="AvançcarPagina" CssClass="button-advance" runat="server" OnClick="AvancarPagina_Click">
                 <span>Avançar</span>

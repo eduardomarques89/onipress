@@ -187,6 +187,7 @@
     <Content Include="src\acessoView.aspx" />
     <Content Include="src\cadastrarView.aspx" />
     <Content Include="src\precadastro.aspx" />
+    <Content Include="src\css\styleresponsive.css" />
     <Content Include="src\video.aspx" />
     <Content Include="src\code_morador.aspx" />
     <Content Include="src\code.aspx" />
@@ -643,6 +644,13 @@
     <Compile Include="src\cadastrarView.aspx.designer.cs">
       <DependentUpon>cadastrarView.aspx</DependentUpon>
     </Compile>
+    <Compile Include="src\second.Master.cs">
+      <DependentUpon>second.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="src\second.Master.designer.cs">
+      <DependentUpon>second.Master</DependentUpon>
+    </Compile>
     <Compile Include="src\precadastro.aspx.cs">
       <DependentUpon>precadastro.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -894,6 +902,7 @@
     <Content Include="src\sass\utils\_sizes.scss" />
     <Content Include="src\principal.Master" />
     <Content Include="src\geral.Master" />
+    <Content Include="src\second.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
