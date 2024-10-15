@@ -129,17 +129,20 @@ namespace global
             try
             {
                 string data = Guid.NewGuid().ToString();
-                string qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + data;
-                imgQrCode.ImageUrl = qrCodeUrl;
+                string qrCodeUrlEntrada = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + data + "entrada";
+                string qrCodeUrlSaida = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + data + "saida";
+
+                imgQrCode.ImageUrl = qrCodeUrlEntrada;
 
                 Database db = DatabaseFactory.CreateDatabase("ConnectionString");
                 string IdUser = Convert.ToString(Session["UserId"]);
                 int idUsuario = Convert.ToInt16(Session["Id"]);
 
                 DbCommand insertCommand = db.GetSqlStringCommand(
-                    "UPDATE OniPres_Acesso SET qrcode = @qrcode WHERE id_uduario = @id");
+                    "UPDATE OniPres_Acesso SET qrcode_entrada = @entrada, qrcode_saida = @saida WHERE id_uduario = @id");
 
-                db.AddInParameter(insertCommand, "@qrcode", DbType.String, qrCodeUrl);
+                db.AddInParameter(insertCommand, "@entrada", DbType.String, qrCodeUrlEntrada);
+                db.AddInParameter(insertCommand, "@saida", DbType.String, qrCodeUrlSaida);
                 db.AddInParameter(insertCommand, "@id", DbType.String, idUsuario);
 
                 db.ExecuteNonQuery(insertCommand);
@@ -182,7 +185,7 @@ namespace global
                         {
                             new
                             {
-                                value = data,
+                                value = data + "entrada",
                                 user_id = Convert.ToInt64(IdUser)
                             }
                         }
