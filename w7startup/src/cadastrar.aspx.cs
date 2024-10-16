@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.EnterpriseLibrary.Common;
 using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 using Microsoft.Practices.EnterpriseLibrary.Data;
+using pix_dynamic_payload_generator.net.Models;
 using System;
 using System.Data;
 using System.Data.Common;
@@ -210,10 +211,10 @@ namespace global
 
                     var responseObject = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(responseBody);
                     int id = responseObject.ids[0];
-
                     Session["UserId"] = id;
 
-                    Response.Redirect("acesso.aspx", false);
+                    string codigo = Request.QueryString["codigo"]; ;
+                    Response.Redirect($"acesso.aspx?codigo={codigo}", false);
                 }
                 catch (Exception ex)
                 {

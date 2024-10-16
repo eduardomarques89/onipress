@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.EnterpriseLibrary.Common;
 using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 using Microsoft.Practices.EnterpriseLibrary.Data;
+using pix_dynamic_payload_generator.net.Models;
 using System;
 using System.Data;
 using System.Data.Common;
@@ -175,7 +176,7 @@ namespace global
         {
             try
             {
-                string data = Guid.NewGuid().ToString();
+                string data = Request.QueryString["codigo"];
                 string qrCodeUrlEntrada = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + data + "entrada";
                 string qrCodeUrlSaida = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + data + "saida";
 

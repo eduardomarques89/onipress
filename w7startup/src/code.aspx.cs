@@ -17,6 +17,9 @@ namespace global
 {
     public partial class code : System.Web.UI.Page
     {
-
+        protected void VoltarHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("homePage.aspx", false);
+        }
     }
 }

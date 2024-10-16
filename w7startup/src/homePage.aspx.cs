@@ -17,7 +17,7 @@ namespace global
     {
         protected void Morador_Click(object sender, EventArgs e)
         {
-            Response.Redirect("code_morador.aspx", true);
+            Response.Redirect("code.aspx", true);
         }
         protected void Visitante_Click(object sender, EventArgs e)
         {

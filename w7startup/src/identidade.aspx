@@ -13,20 +13,20 @@
                             <h3>Dados de Cadastro</h3>
                             <div class="col-12">
                                 <div class="form-group">
+                                    <asp:Label ID="lblName" CssClass="label-input" runat="server" Text="Nome" ></asp:Label>
                                     <asp:TextBox ID="txtName" runat="server" class="form-control" placeholder="Nome completo" ReadOnly="true"></asp:TextBox>
-                                    <asp:Label ID="lblNome" runat="server" Text=""></asp:Label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
+                                    <asp:Label ID="lblCPF" CssClass="label-input" runat="server" Text="CPF" ></asp:Label>
                                     <asp:TextBox ID="txtCpf" runat="server" class="form-control" placeholder="CPF" ReadOnly="true"></asp:TextBox>
-                                    <asp:Label ID="lblCPF" runat="server" Text=""></asp:Label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
+                                    <asp:Label ID="lblCelular" CssClass="label-input" runat="server" Text="Celular" ></asp:Label>
                                     <asp:TextBox ID="txtTell" runat="server" class="form-control" placeholder="Telefone" ReadOnly="true"></asp:TextBox>
-                                    <asp:Label ID="lblTell" runat="server" Text=""></asp:Label>
                                 </div>
                             </div>
                             <div class="col-12">

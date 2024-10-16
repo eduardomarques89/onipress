@@ -184,10 +184,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="src\img\qrcode.png" />
     <Content Include="src\precadastro.aspx" />
     <Content Include="src\css\styleresponsive.css" />
     <Content Include="src\video.aspx" />
-    <Content Include="src\code_morador.aspx" />
     <Content Include="src\code.aspx" />
     <Content Include="src\homePage.aspx" />
     <Content Include="src\identidade.aspx" />
@@ -204,9 +204,6 @@
     <Content Include="src\img\icon-work.svg" />
     <Content Include="src\img\photos.svg" />
     <Content Include="src\img\photo_camera.svg" />
-    <Content Include="src\img\qrcode.png" />
-    <Content Include="src\img\qrcode.svg" />
-    <Content Include="src\img\qrcode_morador.png" />
     <Content Include="src\img\video.mp4" />
     <Content Include="src\js\mascara.js" />
     <Content Include="src\tipoocorrencia.aspx" />
@@ -648,13 +645,6 @@
     </Compile>
     <Compile Include="src\video.aspx.designer.cs">
       <DependentUpon>video.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="src\code_morador.aspx.cs">
-      <DependentUpon>code_morador.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="src\code_morador.aspx.designer.cs">
-      <DependentUpon>code_morador.aspx</DependentUpon>
     </Compile>
     <Compile Include="src\code.aspx.cs">
       <DependentUpon>code.aspx</DependentUpon>

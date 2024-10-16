@@ -1,36 +1,52 @@
-﻿<%@ Page Async="true" Title="" Language="C#" MasterPageFile="~/src/geral.Master" AutoEventWireup="true" CodeBehind="homePage.aspx.cs" Inherits="global.homePage" %>
+﻿<%@ Page Async="true" Title="" Language="C#" MasterPageFile="~/src/second.Master" AutoEventWireup="true" CodeBehind="homePage.aspx.cs" Inherits="global.homePage" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div class="container" style="width: 1026px; ">
-        <h4 class="welcome" style="padding-top: 20px;">Bem vindo,</h4>
-        <h1 class="title">ESCOLHA UMA OPÇÃO</h1>
+    <section class="account-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="register-form-content">
+                        <h4 class="welcome" style="text-align: center">Bem vindo,</h4>
+                        <h2 class="title" style="text-align: center">ESCOLHA UMA OPÇÃO</h2>
+                        <div class="row" style="margin-top: 40px">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <asp:LinkButton ID="morador_click" CssClass="btn-register" style="border-radius: 10px" runat="server" OnClick="Morador_Click">
+                                  <img src="img/icon-person.svg" alt="person" style="width:50px">
+                                    </asp:LinkButton>
+                                    <p style="text-align: center">MORADOR</p>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <asp:LinkButton ID="visitante_click" CssClass="btn-register" style="border-radius: 10px" runat="server" OnClick="Visitante_Click">
+                                    <img src="img/icon-car.svg" alt="car" style="width:50px">
+                                    </asp:LinkButton>
+                                    <p style="text-align: center">VISITANTE</p>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <asp:LinkButton ID="ps_click" CssClass="btn-register" style="border-radius: 10px" runat="server" OnClick="PS_Click">
+                                    <img src="img/icon-work.svg" alt="work" style="width:50px">
+                                    </asp:LinkButton>
+                                    <p style="text-align: center">PRESTADOR DE SERVIÇOS</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                            <asp:LinkButton ID="faq_click" CssClass="btn-register" style="border-radius: 10px" runat="server" OnClick="faq_Click">
+                                  <img src="img/icon-faq.svg" alt="FAQ">
+                            </asp:LinkButton>
+                            <p style="text-align: center">FAQ</p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <div class="line">
-        <div class="choice-box">
-            <asp:LinkButton ID="morador_click" CssClass="choice-morador" runat="server" OnClick="Morador_Click">
-              <img src="img/icon-person.svg" alt="person">
-            </asp:LinkButton>
-          <p>MORADOR</p>
-        </div>
-        <div class="choice-box">
-            <asp:LinkButton ID="visitante_click" CssClass="choice-visitante" runat="server" OnClick="Visitante_Click">
-                <img src="img/icon-car.svg" alt="car">
-            </asp:LinkButton>
-          <p>VISITANTE</p>
-        </div>
-        <div class="choice-box" style="margin-top: 30px;">
-            <asp:LinkButton ID="ps_click" CssClass="choice-work" runat="server" OnClick="PS_Click">
-                <img src="img/icon-work.svg" alt="work">
-            </asp:LinkButton>
-          <p>PRESTADOR DE SERVIÇOS</p>
-        </div>
-      </div>
-      <div class="faq">
-          <asp:LinkButton ID="faq_click" CssClass="faq_button" runat="server" OnClick="faq_Click">
-              <img src="img/icon-faq.svg" alt="FAQ">
-          </asp:LinkButton>
-        <p>FAQ</p>
-      </div>
-    </div>
 </asp:Content>
