@@ -89,6 +89,10 @@ namespace global
                             await CriarRegraDeAcessoPorUsuario(UserId, accessRuleId.Value);
 
                             lblReposta.Text = "Visitante criado com sucesso!";
+
+                            string codigo = Request.QueryString["codigo"] ;
+                            string idUser = Session["UserId"].ToString();
+                            Response.Redirect($"identidade.aspx?codigo={codigo}&user={idUser}", false);
                         }
                     }
                     else
