@@ -56,40 +56,47 @@ namespace global
                     }
                 }
 
-                string token = "vQYm8wVm0FBVC5qN7n91YQ==";
+                string token = Request.QueryString["codigo"];
 
-                string link = "https://w7onipress.azurewebsites.net/src/identidade.aspx?codigo=" + token;
-
-                Database db = DatabaseFactory.CreateDatabase("ConnectionString");
-
-                using (DbCommand insertCommandDisparos = db.GetSqlStringCommand(
-                    "INSERT INTO Onipres_Disparos (telefone, mensagem, data, status, token) values (@telefone, @mensagem, GETDATE(), @status, @token)"))
+                if (!string.IsNullOrEmpty(token))
                 {
-                    db.AddInParameter(insertCommandDisparos, "@telefone", DbType.String, telefone);
-                    db.AddInParameter(insertCommandDisparos, "@mensagem", DbType.String, "Olá, o seu acesso foi liberado! Acesse o link para liberar a cancela " + link);
-                    db.AddInParameter(insertCommandDisparos, "@status", DbType.String, "Enviando");
-                    db.AddInParameter(insertCommandDisparos, "@token", DbType.String, token);
+                    string link = "https://w7onipress.azurewebsites.net/src/identidade.aspx?codigo=" + token;
 
-                    await Task.Run(() => db.ExecuteNonQuery(insertCommandDisparos));
-                }
+                    Database db = DatabaseFactory.CreateDatabase("ConnectionString");
 
-                int? timeZoneId = await CriarTimeZone(UserId);
-
-                if (timeZoneId.HasValue)
-                {                    
-                    await CriarTimeSpan(timeZoneId.Value);
-
-                    int? accessRuleId = await CriarRegraDeAcesso(UserId);
-
-                    if (accessRuleId.HasValue)
+                    using (DbCommand insertCommandDisparos = db.GetSqlStringCommand(
+                        "INSERT INTO Onipres_Disparos (telefone, mensagem, data, status, token) values (@telefone, @mensagem, GETDATE(), @status, @token)"))
                     {
-                        await CriarRegraDeAcessoTimeZone(accessRuleId.Value, timeZoneId.Value);
-                        await CriarRegraDeAcessoPorUsuario(UserId, accessRuleId.Value);
+                        db.AddInParameter(insertCommandDisparos, "@telefone", DbType.String, telefone);
+                        db.AddInParameter(insertCommandDisparos, "@mensagem", DbType.String, "Olá, o seu acesso foi liberado! Acesse o link para liberar a cancela " + link);
+                        db.AddInParameter(insertCommandDisparos, "@status", DbType.String, "Enviando");
+                        db.AddInParameter(insertCommandDisparos, "@token", DbType.String, token);
+
+                        await Task.Run(() => db.ExecuteNonQuery(insertCommandDisparos));
+                    }
+
+                    int? timeZoneId = await CriarTimeZone(UserId);
+
+                    if (timeZoneId.HasValue)
+                    {
+                        await CriarTimeSpan(timeZoneId.Value);
+
+                        int? accessRuleId = await CriarRegraDeAcesso(UserId);
+
+                        if (accessRuleId.HasValue)
+                        {
+                            await CriarRegraDeAcessoTimeZone(accessRuleId.Value, timeZoneId.Value);
+                            await CriarRegraDeAcessoPorUsuario(UserId, accessRuleId.Value);
+                        }
+                    }
+                    else
+                    {
+                        lblErro.Text = "Erro ao obter o ID da API.";
                     }
                 }
                 else
                 {
-                    lblErro.Text = "Erro ao obter o ID da API.";
+                    lblErro.Text = "Token não informado";
                 }
             }
             catch (Exception ex)

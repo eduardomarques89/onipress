@@ -17,36 +17,43 @@ namespace global
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string token = "vQYm8wVm0FBVC5qN7n91YQ==";
+            string token = Request.QueryString["codigo"];
 
-            var query = "select * from Onipres_Disparos where token = @token";
-
-            using (var connection = DatabaseFactory.CreateDatabase("ConnectionString").CreateConnection())
+            if (!string.IsNullOrEmpty(token))
             {
-                var command = connection.CreateCommand();
-                command.CommandText = query;
-                command.CommandType = CommandType.Text;
+                var query = "select * from Onipres_Disparos where token = @token";
 
-                // Add the token parameter
-                var parameter = command.CreateParameter();
-                parameter.ParameterName = "@token";
-                parameter.Value = token;
-                command.Parameters.Add(parameter);
-
-                connection.Open();
-                using (IDataReader reader = command.ExecuteReader())
+                using (var connection = DatabaseFactory.CreateDatabase("ConnectionString").CreateConnection())
                 {
-                    if (reader.Read())
+                    var command = connection.CreateCommand();
+                    command.CommandText = query;
+                    command.CommandType = CommandType.Text;
+
+                    // Add the token parameter
+                    var parameter = command.CreateParameter();
+                    parameter.ParameterName = "@token";
+                    parameter.Value = token;
+                    command.Parameters.Add(parameter);
+
+                    connection.Open();
+                    using (IDataReader reader = command.ExecuteReader())
                     {
-                        txtName.Text = reader["nome_visitante"].ToString();
-                        txtCpf.Text = reader["cpf_visitante"].ToString();
-                        txtTell.Text = reader["telefone_visitante"].ToString();
-                    }
-                    else
-                    {
-                        lblNome.Text = "Não encontrado";
+                        if (reader.Read())
+                        {
+                            txtName.Text = reader["nome_visitante"].ToString();
+                            txtCpf.Text = reader["cpf_visitante"].ToString();
+                            txtTell.Text = reader["telefone_visitante"].ToString();
+                        }
+                        else
+                        {
+                            lblNome.Text = "Não encontrado";
+                        }
                     }
                 }
+            }
+            else
+            {
+                lblErro.Text = "Token não informado";
             }
         }
 

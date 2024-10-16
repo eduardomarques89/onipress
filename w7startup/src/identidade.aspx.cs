@@ -16,42 +16,50 @@ namespace global
     {
         public void Page_Load(object sender, EventArgs e)
         {
-            string token = "vQYm8wVm0FBVC5qN7n91YQ==";
+            string token = Request.QueryString["codigo"];
 
-            var query = "select a.name as nome, p.cpf as cpf, p.celular as celular, a.data_initial as datai, a.data_final as dataf from OniPres_pessoa p join Onipres_Disparos d on p.celular = d.telefone_visitante join OniPres_Acesso a on a.id_uduario = p.id where d.token = @token";
-
-            using (var connection = DatabaseFactory.CreateDatabase("ConnectionString").CreateConnection())
+            if (!string.IsNullOrEmpty(token))
             {
-                var command = connection.CreateCommand();
-                command.CommandText = query;
-                command.CommandType = CommandType.Text;
+                var query = "select a.name as nome, p.cpf as cpf, p.celular as celular, a.data_initial as datai, a.data_final as dataf from OniPres_pessoa p join Onipres_Disparos d on p.celular = d.telefone_visitante join OniPres_Acesso a on a.id_uduario = p.id where d.token = @token";
 
-                // Add the token parameter
-                var parameter = command.CreateParameter();
-                parameter.ParameterName = "@token";
-                parameter.Value = token;
-                command.Parameters.Add(parameter);
-
-                connection.Open();
-                using (IDataReader reader = command.ExecuteReader())
+                using (var connection = DatabaseFactory.CreateDatabase("ConnectionString").CreateConnection())
                 {
-                    if (reader.Read())
+                    var command = connection.CreateCommand();
+                    command.CommandText = query;
+                    command.CommandType = CommandType.Text;
+
+                    var parameter = command.CreateParameter();
+                    parameter.ParameterName = "@token";
+                    parameter.Value = token;
+                    command.Parameters.Add(parameter);
+
+                    connection.Open();
+                    using (IDataReader reader = command.ExecuteReader())
                     {
-                        txtName.Text = reader["nome"].ToString();
-                        txtCpf.Text = reader["cpf"].ToString();
-                        txtTell.Text = reader["celular"].ToString();
-                        txtDataInicial.Text = Convert.ToDateTime(reader["datai"]).ToString("yyyy-MM-dd");
-                        txtDataFinal.Text = Convert.ToDateTime(reader["dataf"]).ToString("yyyy-MM-dd");
-                    }
-                    else
-                    {
-                        lblNome.Text = "Não encontrado";
+                        if (reader.Read())
+                        {
+                            txtName.Text = reader["nome"].ToString();
+                            txtCpf.Text = reader["cpf"].ToString();
+                            txtTell.Text = reader["celular"].ToString();
+                            txtDataInicial.Text = Convert.ToDateTime(reader["datai"]).ToString("yyyy-MM-dd");
+                            txtDataFinal.Text = Convert.ToDateTime(reader["dataf"]).ToString("yyyy-MM-dd");
+                        }
+                        else
+                        {
+                            lblNome.Text = "Não encontrado";
+                        }
                     }
                 }
-            }
 
-            GerarQrCode_Click();
+                // Gerando o QR Code após a consulta
+                GerarQrCode_Click();
+            }
+            else
+            {
+                lblErro.Text = "Token não informado";
+            }
         }
+
 
         protected void EnviarFotos_Click(object sender, EventArgs e)
         {
