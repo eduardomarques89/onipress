@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.EnterpriseLibrary.Common;
 using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 using Microsoft.Practices.EnterpriseLibrary.Data;
+using pix_dynamic_payload_generator.net.Models;
 using System;
 using System.Data;
 using System.Data.Common;
@@ -8,6 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI;
+using System.Xml.Linq;
 using static System.Net.WebRequestMethods;
 
 namespace global
@@ -31,6 +33,7 @@ namespace global
             {
                 int idUsuario = Convert.ToInt32(Session["Id"]);
                 string UserId = Session["UserId"]?.ToString();
+                string telefone = Session["telefone"]?.ToString();
 
                 if (string.IsNullOrEmpty(UserId))
                 {
@@ -53,18 +56,19 @@ namespace global
                     }
                 }
 
-                int token = 1;
+                string token = "vQYm8wVm0FBVC5qN7n91YQ==";
 
-                string link = "https://w7onipress.azurewebsites.net/src/view.aspx?codigo=" + token;
+                string link = "https://w7onipress.azurewebsites.net/src/identidade.aspx?codigo=" + token;
 
                 Database db = DatabaseFactory.CreateDatabase("ConnectionString");
 
                 using (DbCommand insertCommandDisparos = db.GetSqlStringCommand(
-                    "INSERT INTO Onipres_Disparos (telefone, mensagem, data, status) values (@telefone, @mensagem, GETDATE(), @status) "))
+                    "INSERT INTO Onipres_Disparos (telefone, mensagem, data, status, token) values (@telefone, @mensagem, GETDATE(), @status, @token)"))
                 {
-                    db.AddInParameter(insertCommandDisparos, "@telefone", DbType.String, dataInicial);
+                    db.AddInParameter(insertCommandDisparos, "@telefone", DbType.String, telefone);
                     db.AddInParameter(insertCommandDisparos, "@mensagem", DbType.String, "Olá, o seu acesso foi liberado! Acesse o link para liberar a cancela " + link);
                     db.AddInParameter(insertCommandDisparos, "@status", DbType.String, "Enviando");
+                    db.AddInParameter(insertCommandDisparos, "@token", DbType.String, token);
 
                     await Task.Run(() => db.ExecuteNonQuery(insertCommandDisparos));
                 }
@@ -114,9 +118,6 @@ namespace global
             {
                 db.AddInParameter(insertCommand, "@data_i", DbType.String, dataInicial);
                 db.AddInParameter(insertCommand, "@data_f", DbType.String, dataFinal);
-                //db.AddInParameter(insertCommand, "@companies", DbType.String, ddlCompanies.SelectedValue);
-                //db.AddInParameter(insertCommand, "@block", DbType.String, ddlBlock.SelectedValue);
-                //db.AddInParameter(insertCommand, "@unity", DbType.String, ddlUnity.SelectedValue);
                 db.AddInParameter(insertCommand, "@device", DbType.String, 0);
                 db.AddInParameter(insertCommand, "@id", DbType.Int32, idUsuario);
 
@@ -128,7 +129,7 @@ namespace global
         {
             try
             {
-                string loginUrl = "http://192.168.0.204:8013/login.fcgi";
+                string loginUrl = "http://192.168.0.201:8013/login.fcgi";
                 var loginBody = new { login = "admin", password = "admin" };
 
                 var loginContent = new StringContent(
@@ -155,7 +156,7 @@ namespace global
         {
             try
             {
-                string apiUrl = $"http://192.168.0.204:8013/create_objects.fcgi?session={apiSession}";
+                string apiUrl = $"http://192.168.0.201:8013/create_objects.fcgi?session={apiSession}";
                 var requestBody = new
                 {
                     @object = "time_zones",
@@ -248,7 +249,7 @@ namespace global
                         break;
                 }
 
-                string apiUrl = $"http://192.168.0.204:8013/create_objects.fcgi?session={apiSession}";
+                string apiUrl = $"http://192.168.0.201:8013/create_objects.fcgi?session={apiSession}";
                 var requestBody = new
                 {
                     @object = "time_spans",
@@ -289,7 +290,7 @@ namespace global
         {
             try
             {
-                string apiUrl = $"http://192.168.0.204:8013/create_objects.fcgi?session={apiSession}";
+                string apiUrl = $"http://192.168.0.201:8013/create_objects.fcgi?session={apiSession}";
                 var requestBody = new
                 {
                     @object = "access_rules",
@@ -312,7 +313,6 @@ namespace global
                 ? (int?)Convert.ToInt32(responseData.ids[0])
                 : null;
 
-                lblErro.Text = "Criado";
             }
             catch (Exception ex)
             {
@@ -325,7 +325,7 @@ namespace global
         {
             try
             {
-                string apiUrl = $"http://192.168.0.204:8013/create_objects.fcgi?session={apiSession}";
+                string apiUrl = $"http://192.168.0.201:8013/create_objects.fcgi?session={apiSession}";
                 var requestBody = new
                 {
                     @object = "access_rule_time_zones",
@@ -352,7 +352,7 @@ namespace global
         {
             try
             {
-                string apiUrl = $"http://192.168.0.204:8013/create_objects.fcgi?session={apiSession}";
+                string apiUrl = $"http://192.168.0.201:8013/create_objects.fcgi?session={apiSession}";
                 var requestBody = new
                 {
                     @object = "user_access_rules",
@@ -367,8 +367,6 @@ namespace global
 
                 HttpResponseMessage response = await client.PostAsync(apiUrl, content);
                 response.EnsureSuccessStatusCode();
-
-                Response.Redirect("cadastrarView.aspx", true);
             }
             catch (Exception ex)
             {

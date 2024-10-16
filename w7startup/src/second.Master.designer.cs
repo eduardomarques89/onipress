@@ -11,7 +11,7 @@ namespace global
 {
 
 
-    public partial class geral
+    public partial class second
     {
 
         /// <summary>

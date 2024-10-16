@@ -17,7 +17,37 @@ namespace global
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            string token = "vQYm8wVm0FBVC5qN7n91YQ==";
 
+            var query = "select * from Onipres_Disparos where token = @token";
+
+            using (var connection = DatabaseFactory.CreateDatabase("ConnectionString").CreateConnection())
+            {
+                var command = connection.CreateCommand();
+                command.CommandText = query;
+                command.CommandType = CommandType.Text;
+
+                // Add the token parameter
+                var parameter = command.CreateParameter();
+                parameter.ParameterName = "@token";
+                parameter.Value = token;
+                command.Parameters.Add(parameter);
+
+                connection.Open();
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        txtName.Text = reader["nome_visitante"].ToString();
+                        txtCpf.Text = reader["cpf_visitante"].ToString();
+                        txtTell.Text = reader["telefone_visitante"].ToString();
+                    }
+                    else
+                    {
+                        lblNome.Text = "Não encontrado";
+                    }
+                }
+            }
         }
 
         protected async void EnviarDados_Click(object sender, EventArgs e)
@@ -85,6 +115,7 @@ namespace global
                                     string nome = reader["name"].ToString();
 
                                     Session["Nome"] = nome;
+                                    Session["Telefone"] = txtTell.Text;
                                     Session["Id"] = insertedId;
                                 }
                                 else
@@ -120,7 +151,7 @@ namespace global
             {
                 try
                 {
-                    string loginUrl = "http://192.168.0.204:8013/login.fcgi";
+                    string loginUrl = "http://192.168.0.201:8013/login.fcgi";
 
                     var loginBody = new
                     {
@@ -140,7 +171,7 @@ namespace global
                     string loginResponseBody = await loginResponse.Content.ReadAsStringAsync();
                     var loginResponseData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(loginResponseBody);
                     string session = loginResponseData.session;
-                    string host = "http://192.168.0.204:8013/";
+                    string host = "http://192.168.0.201:8013/";
 
                     string apiUrl = $"{host}/create_objects.fcgi?session={session}";
 

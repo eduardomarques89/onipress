@@ -184,8 +184,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="src\acessoView.aspx" />
-    <Content Include="src\cadastrarView.aspx" />
     <Content Include="src\precadastro.aspx" />
     <Content Include="src\css\styleresponsive.css" />
     <Content Include="src\video.aspx" />
@@ -630,20 +628,6 @@
     <Compile Include="Model\FGeral\AccessToken.cs" />
     <Compile Include="Model\FPIX\Whatsapp.cs" />
     <Compile Include="Service\Zapweb.cs" />
-    <Compile Include="src\acessoView.aspx.cs">
-      <DependentUpon>acessoView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="src\acessoView.aspx.designer.cs">
-      <DependentUpon>acessoView.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="src\cadastrarView.aspx.cs">
-      <DependentUpon>cadastrarView.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="src\cadastrarView.aspx.designer.cs">
-      <DependentUpon>cadastrarView.aspx</DependentUpon>
-    </Compile>
     <Compile Include="src\second.Master.cs">
       <DependentUpon>second.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

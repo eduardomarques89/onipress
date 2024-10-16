@@ -14,13 +14,52 @@ namespace global
 {
     public partial class identidade : System.Web.UI.Page
     {
+        public void Page_Load(object sender, EventArgs e)
+        {
+            string token = "vQYm8wVm0FBVC5qN7n91YQ==";
+
+            var query = "select a.name as nome, p.cpf as cpf, p.celular as celular, a.data_initial as datai, a.data_final as dataf from OniPres_pessoa p join Onipres_Disparos d on p.celular = d.telefone_visitante join OniPres_Acesso a on a.id_uduario = p.id where d.token = @token";
+
+            using (var connection = DatabaseFactory.CreateDatabase("ConnectionString").CreateConnection())
+            {
+                var command = connection.CreateCommand();
+                command.CommandText = query;
+                command.CommandType = CommandType.Text;
+
+                // Add the token parameter
+                var parameter = command.CreateParameter();
+                parameter.ParameterName = "@token";
+                parameter.Value = token;
+                command.Parameters.Add(parameter);
+
+                connection.Open();
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        txtName.Text = reader["nome"].ToString();
+                        txtCpf.Text = reader["cpf"].ToString();
+                        txtTell.Text = reader["celular"].ToString();
+                        txtDataInicial.Text = Convert.ToDateTime(reader["datai"]).ToString("yyyy-MM-dd");
+                        txtDataFinal.Text = Convert.ToDateTime(reader["dataf"]).ToString("yyyy-MM-dd");
+                    }
+                    else
+                    {
+                        lblNome.Text = "Não encontrado";
+                    }
+                }
+            }
+
+            GerarQrCode_Click();
+        }
+
         protected void EnviarFotos_Click(object sender, EventArgs e)
         {
-            if (fileUpload1.HasFile)
+            if (fileUpload.HasFile)
             {
                 try
                 {
-                    string fileName = Path.GetFileName(fileUpload1.FileName);
+                    string fileName = Path.GetFileName(fileUpload.FileName);
                     string folderPath = Server.MapPath("~/upload/");
 
                     if (!Directory.Exists(folderPath))
@@ -29,7 +68,7 @@ namespace global
                     }
 
                     string filePath = Path.Combine(folderPath, fileName);
-                    fileUpload1.SaveAs(filePath);
+                    fileUpload.SaveAs(filePath);
 
                     SalvarImagemNoBanco(filePath);
 
@@ -76,7 +115,7 @@ namespace global
             {
                 try
                 {
-                    string loginUrl = "http://192.168.0.204:8013/login.fcgi";
+                    string loginUrl = "http://192.168.0.201:8013/login.fcgi";
 
                     var loginBody = new
                     {
@@ -97,17 +136,17 @@ namespace global
                     var loginResponseData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(loginResponseBody);
                     string session = loginResponseData.session;
 
-                    string host = "http://192.168.0.204:8013/";
+                    string host = "http://192.168.0.201:8013/";
                     string userId = Session["UserId"]?.ToString();
                     string apiUrl = $"{host}/user_set_image.fcgi?user_id={userId}&match=1&timestamp={userId}&session={session}";
 
                     using (var multipartFormDataContent = new MultipartFormDataContent())
                     {
-                        var imagePath = Server.MapPath("~/upload/" + fileUpload1.FileName);
+                        var imagePath = Server.MapPath("~/upload/" + fileUpload.FileName);
                         var imageContent = new ByteArrayContent(System.IO.File.ReadAllBytes(imagePath));
                         imageContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
-                        
-                        multipartFormDataContent.Add(imageContent, "image", fileUpload1.FileName);
+
+                        multipartFormDataContent.Add(imageContent, "image", fileUpload.FileName);
 
                         HttpResponseMessage apiResponse = await client.PostAsync(apiUrl, multipartFormDataContent);
                         apiResponse.EnsureSuccessStatusCode();
@@ -124,7 +163,7 @@ namespace global
         }
 
 
-        protected async void GerarQrCode_Click(object sender, EventArgs e)
+        protected async void GerarQrCode_Click()
         {
             try
             {
@@ -149,7 +188,7 @@ namespace global
 
                 using (HttpClient client = new HttpClient())
                 {
-                    string loginUrl = "http://192.168.0.204:8013/login.fcgi";
+                    string loginUrl = "http://192.168.0.201:8013/login.fcgi";
                     var loginBody = new
                     {
                         login = "admin",
@@ -175,7 +214,7 @@ namespace global
                         return;
                     }
 
-                    string host = "http://192.168.0.204:8013/";
+                    string host = "http://192.168.0.201:8013/";
                     string apiUrl = $"{host}/create_objects.fcgi?session={session}";
 
                     var requestBody = new

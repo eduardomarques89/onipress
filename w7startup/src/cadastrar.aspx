@@ -7,7 +7,7 @@
             <div class="col-12">
                 <div class="register-form-content">
                     <div class="row">
-                        <h3>Cadastre-se</h3>
+                        <h3>Cadastre o visitante</h3>
                         <div class="col-12">
                             <div class="form-group">
                                 <asp:TextBox ID="txtName" runat="server" class="form-control" placeholder="Nome completo" Required></asp:TextBox>
