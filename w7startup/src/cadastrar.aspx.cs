@@ -47,7 +47,7 @@ namespace global
                         }
                         else
                         {
-                            lblNome.Text = "Não encontrado";
+                            lblErro.Text = "Não encontrado";
                         }
                     }
                 }
@@ -60,28 +60,9 @@ namespace global
 
         protected async void EnviarDados_Click(object sender, EventArgs e)
         {
-            lblNome.Text = "";
-            lblCPF.Text = "";
-            lblTell.Text = "";
             lblReposta.Text = "";
 
             bool allFieldsValid = true;
-
-            if (string.IsNullOrEmpty(txtName.Text))
-            {
-                lblNome.Text = "Preencha com seu Nome!";
-                allFieldsValid = false;
-            }
-            if (string.IsNullOrEmpty(txtCpf.Text))
-            {
-                lblCPF.Text = "Preencha com seu CPF!";
-                allFieldsValid = false;
-            }
-            if (string.IsNullOrEmpty(txtTell.Text))
-            {
-                lblTell.Text = "Preencha com seu Telefone!";
-                allFieldsValid = false;
-            }
 
             if (allFieldsValid)
             {
