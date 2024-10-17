@@ -199,7 +199,8 @@ namespace global
                 {
                     if (reader.Read())
                     {
-                        return reader["ip"].ToString();
+                        //return reader["ip"].ToString();
+                        Session["ip"] = reader["ip"].ToString();
                     }
                 }
             }

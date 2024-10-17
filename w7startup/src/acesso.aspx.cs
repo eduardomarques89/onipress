@@ -141,7 +141,7 @@ namespace global
 
         private async Task<string> ObterSessaoApi()
         {
-            string ip = await ObterIpPorTelefone(Request.QueryString["telefone_visitante"]);
+            string ip = Session["ip"].ToString();
 
             try
             {
@@ -170,7 +170,7 @@ namespace global
 
         private async Task<int?> CriarTimeZone(string UserId)
         {
-            string ip = await ObterIpPorTelefone(Request.QueryString["telefone_visitante"]);
+            string ip = Session["ip"].ToString();
 
             try
             {
@@ -206,7 +206,7 @@ namespace global
 
         private async Task CriarTimeSpan(int timeZoneId)
         {
-            string ip = await ObterIpPorTelefone(Request.QueryString["telefone_visitante"]);
+            string ip = Session["ip"].ToString();
 
             if (string.IsNullOrEmpty(ip))
             {
@@ -314,7 +314,7 @@ namespace global
 
         private async Task<int?> CriarRegraDeAcesso(string UserId)
         {
-            string ip = await ObterIpPorTelefone(Request.QueryString["telefone_visitante"]);
+            string ip = Session["ip"].ToString();
 
             try
             {
@@ -351,13 +351,7 @@ namespace global
 
         private async Task CriarRegraDeAcessoTimeZone(int accessRuleId, int timeZoneId)
         {
-            string ip = await ObterIpPorTelefone(Request.QueryString["telefone_visitante"]);
-
-            if (string.IsNullOrEmpty(ip))
-            {
-                lblErro.Text = "Dispositivo não encontrado.";
-                return;
-            }
+            string ip = Session["ip"].ToString();
 
             try
             {
@@ -386,13 +380,7 @@ namespace global
 
         private async Task CriarRegraDeAcessoPorUsuario(string UserId, int accessRuleId)
         {
-            string ip = await ObterIpPorTelefone(Request.QueryString["telefone_visitante"]);
-
-            if (string.IsNullOrEmpty(ip))
-            {
-                lblErro.Text = "Dispositivo não encontrado.";
-                return;
-            }
+            string ip = Session["ip"].ToString();
 
             try
             {
@@ -416,36 +404,6 @@ namespace global
             {
                 lblErro.Text = "Erro ao associar regra de acesso ao usuário: " + ex.Message;
             }
-        }
-
-        private async Task<string> ObterIpPorTelefone(string telefone)
-        {
-            string query = @"
-                SELECT d.numero_ip AS ip 
-                FROM OniPres_empresa e 
-                JOIN OniPres_dispositivo d ON e.id = d.empresa 
-                JOIN OniPres_pessoa p ON e.id = p.empresa 
-                WHERE p.celular = @telefone";
-
-            using (var connection = DatabaseFactory.CreateDatabase("ConnectionString").CreateConnection())
-            {
-                var command = connection.CreateCommand();
-                command.CommandText = query;
-                command.CommandType = CommandType.Text;
-
-                command.Parameters.Add(new SqlParameter("@telefone", SqlDbType.VarChar) { Value = telefone });
-
-                await connection.OpenAsync();
-                using (var reader = await command.ExecuteReaderAsync())
-                {
-                    if (reader.Read())
-                    {
-                        return reader["ip"].ToString();
-                    }
-                }
-            }
-
-            return null;
         }
     }
 }
