@@ -10,3 +10,7 @@ Para entender mais sobre o projeto, ou contratar o serviço, acesso o link abaix
 
  ### -> [OniPres](https://onipres.com.br/)
 
+## 💻 Desenvolvimento
+
+O projeto foi desenvolvido por:
+ [W7 Agencia](https://w7agencia.com.br/)
