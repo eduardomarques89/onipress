@@ -24,12 +24,17 @@ namespace global
 
                 if (!string.IsNullOrEmpty(token))
                 {
-                    var query = @"select a.name as nome, p.cpf as cpf, p.celular as celular, 
-                          a.data_initial as datai, a.data_final as dataf 
-                          from OniPres_pessoa p 
-                          join Onipres_Disparos d on p.celular = d.telefone_visitante 
-                          join OniPres_Acesso a on a.id_uduario = p.id 
-                          where d.token = @token";
+                    var query = @"SELECT TOP 1 
+                                    a.name AS nome, 
+                                    p.cpf AS cpf, 
+                                    p.celular AS celular, 
+                                    a.data_initial AS datai, 
+                                    a.data_final AS dataf
+                                FROM OniPres_pessoa p
+                                JOIN Onipres_Disparos d ON p.celular = d.telefone
+                                LEFT JOIN OniPres_Acesso a ON a.id_uduario = p.id
+                                WHERE d.token = @token
+                                ORDER BY a.data_final DESC;";
 
                     using (var connection = DatabaseFactory.CreateDatabase("ConnectionString").CreateConnection())
                     {
@@ -47,16 +52,23 @@ namespace global
                         {
                             if (reader.Read())
                             {
-                                txtName.Text = reader["nome"].ToString();
-                                txtCpf.Text = reader["cpf"].ToString();
-                                txtTell.Text = reader["celular"].ToString();
-                                txtDataInicial.Text = Convert.ToDateTime(reader["datai"]).ToString("yyyy-MM-dd");
-                                txtDataFinal.Text = Convert.ToDateTime(reader["dataf"]).ToString("yyyy-MM-dd");
+                                txtName.Text = reader["nome"] != DBNull.Value ? reader["nome"].ToString() : string.Empty;
+                                txtCpf.Text = reader["cpf"] != DBNull.Value ? reader["cpf"].ToString() : string.Empty;
+                                txtTell.Text = reader["celular"] != DBNull.Value ? reader["celular"].ToString() : string.Empty;
+
+                                txtDataInicial.Text = reader["datai"] != DBNull.Value
+                                    ? Convert.ToDateTime(reader["datai"]).ToString("yyyy-MM-dd")
+                                    : string.Empty;
+
+                                txtDataFinal.Text = reader["dataf"] != DBNull.Value
+                                    ? Convert.ToDateTime(reader["dataf"]).ToString("yyyy-MM-dd")
+                                    : string.Empty;
                             }
                             else
                             {
                                 lblErro.Text = "Não encontrado";
                             }
+
                         }
                     }
 
@@ -68,8 +80,6 @@ namespace global
                 }
             }
         }
-
-
 
         protected void EnviarFotos_Click(object sender, EventArgs e)
         {
