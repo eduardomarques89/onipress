@@ -12,7 +12,7 @@
                             <div class="col-12" style="text-align: center">
                                 <div class="form-group mb--0">
                                     <h2>LEIA O QRCODE ABAIXO</h2>
-                                    <img src="img/qrcode.png" alt="">
+                                    <asp:Image ID="imgQrCode" runat="server" style="height: 400px; padding-block: 20px"/>
                                 </div>
                             </div>
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.EnterpriseLibrary.Common;
 using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 using Microsoft.Practices.EnterpriseLibrary.Data;
+using QRCoder;
 using System;
 using System.Data;
 using System.Data.Common;
@@ -14,8 +15,8 @@ using System.Web.UI;
 namespace global
 {
     public partial class homePage : System.Web.UI.Page
-    {
-        protected void Morador_Click(object sender, EventArgs e)
+    {       
+            protected void Morador_Click(object sender, EventArgs e)
         {
             Response.Redirect("code.aspx", true);
         }
@@ -32,5 +33,6 @@ namespace global
         {
             Response.Redirect("code.aspx", true);
         }
+        
     }
 }

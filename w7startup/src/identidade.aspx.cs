@@ -48,10 +48,10 @@ namespace global
                             if (reader.Read())
                             {
                                 txtName.Text = reader["nome"].ToString();
-                                //txtCpf.Text = reader["cpf"].ToString();
-                                //txtTell.Text = reader["celular"].ToString();
-                                //txtDataInicial.Text = Convert.ToDateTime(reader["datai"]).ToString("yyyy-MM-dd");
-                                //txtDataFinal.Text = Convert.ToDateTime(reader["dataf"]).ToString("yyyy-MM-dd");
+                                txtCpf.Text = reader["cpf"].ToString();
+                                txtTell.Text = reader["celular"].ToString();
+                                txtDataInicial.Text = Convert.ToDateTime(reader["datai"]).ToString("yyyy-MM-dd");
+                                txtDataFinal.Text = Convert.ToDateTime(reader["dataf"]).ToString("yyyy-MM-dd");
                             }
                             else
                             {
@@ -142,7 +142,7 @@ namespace global
             {
                 try
                 {
-                    string loginUrl = "http://" + ip + ":8013/login.fcgi";
+                    string loginUrl = "http://" + ip + ":8113/login.fcgi";
 
                     var loginBody = new
                     {
@@ -163,7 +163,7 @@ namespace global
                     var loginResponseData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(loginResponseBody);
                     string session = loginResponseData.session;
 
-                    string host = "http://" + ip + ":8013/";
+                    string host = "http://" + ip + ":8113/";
                     string userId = Session["UserId"]?.ToString();
                     string apiUrl = $"{host}/user_set_image.fcgi?user_id={userId}&match=1&timestamp={userId}&session={session}";
 
@@ -222,7 +222,7 @@ namespace global
 
                 using (HttpClient client = new HttpClient())
                 {
-                    string loginUrl = "http://" + ip + ":8013/login.fcgi";
+                    string loginUrl = "http://" + ip + ":8113/login.fcgi";
                     var loginBody = new
                     {
                         login = "admin",
@@ -248,7 +248,7 @@ namespace global
                         return;
                     }
 
-                    string host = "http://" + ip + ":8013/";
+                    string host = "http://" + ip + ":8113/";
                     string apiUrl = $"{host}/create_objects.fcgi?session={session}";
 
                     var requestBody = new
