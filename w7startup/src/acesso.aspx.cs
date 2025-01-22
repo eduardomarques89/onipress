@@ -61,7 +61,9 @@ namespace global
 
                 if (!string.IsNullOrEmpty(token))
                 {
-                    string link = "https://w7onipress.azurewebsites.net/src/identidade.aspx?codigo=" + token;
+                    string codigo = Request.QueryString["codigo"];
+                    string idUser = Session["UserId"].ToString();
+                    string link = "https://w7onipress.azurewebsites.net/src/identidade.aspx?codigo=" + codigo + "&user=" + idUser;
 
                     Database db = DatabaseFactory.CreateDatabase("ConnectionString");
 
@@ -89,11 +91,11 @@ namespace global
                             await CriarRegraDeAcessoTimeZone(accessRuleId.Value, timeZoneId.Value);
                             await CriarRegraDeAcessoPorUsuario(UserId, accessRuleId.Value);
 
-                            lblReposta.Text = "Visitante criado com sucesso!";
+                            lblReposta.Text = "Visitante criado com sucesso!";;
 
-                            string codigo = Request.QueryString["codigo"] ;
-                            string idUser = Session["UserId"].ToString();
-                            Response.Redirect($"identidade.aspx?codigo={codigo}&user={idUser}", false);
+                            string cod = Request.QueryString["codigo"];
+                            string User = Session["UserId"].ToString();
+                            Response.Redirect($"identidade.aspx?codigo={cod}&user={User}", false);
                         }
                     }
                     else

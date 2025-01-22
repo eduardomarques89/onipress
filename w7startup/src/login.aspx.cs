@@ -4,8 +4,15 @@ using Microsoft.Practices.EnterpriseLibrary.Data;
 using System;
 using System.Data;
 using System.Data.Common;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http.Headers;
+using System.Net.Http;
 using System.Web.UI;
+using Newtonsoft.Json;
+using pix_dynamic_payload_generator.net.Models;
+using w7startup;
 
 namespace global
 {
@@ -13,8 +20,80 @@ namespace global
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            //chat dados = new chat();
+            //dados = AtualizaDescricao();
+            //lblMensagem.Text = dados.id;
+
+            lblMensagem.Text = CriaChat("29443", "1672156");
         }
+
+        public static string CriaChat(string idagente, string idchat)
+        {
+            string url = "https://api.zaia.app/v1.1/api/external-generative-chat/create";
+            string jsonBody = "{\"agentId\": 29443,\"externalGenerativeChatId\": 1671887,\"prompt\": \"Hi! I need help...\",\"streaming\": false,\"asMarkdown\": false}";
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            request.Accept = "application/json";
+            request.Headers.Add("Authorization", "Bearer 7ca346d9-0834-4559-b9ec-6eb8888320bd");
+
+            using (StreamWriter streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                streamWriter.Write(jsonBody);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
+                {
+                    string responseData = streamReader.ReadToEnd();
+                    return responseData;
+                }
+            }
+            catch (WebException ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public static string CriaMensagem(string idagente, string idchat)
+        {
+            string url = "https://api.zaia.app/v1.1/api/external-generative-message/create";
+            string jsonBody = "{\"agentId\": 29443,\"externalGenerativeChatId\": 1671887,\"prompt\": \"Hi! I need help...\",\"streaming\": false,\"asMarkdown\": false}";
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            request.Accept = "application/json";
+            request.Headers.Add("Authorization", "Bearer 7ca346d9-0834-4559-b9ec-6eb8888320bd");
+
+            using (StreamWriter streamWriter = new StreamWriter(request.GetRequestStream()))
+            {
+                streamWriter.Write(jsonBody);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                using (StreamReader streamReader = new StreamReader(response.GetResponseStream()))
+                {
+                    string responseData = streamReader.ReadToEnd();
+                    return responseData;
+                }
+            }
+            catch (WebException ex)
+            {
+                return ex.Message;
+            }
+        }
+
+
 
         protected void btnEntrar_Click(object sender, EventArgs e)
         {
